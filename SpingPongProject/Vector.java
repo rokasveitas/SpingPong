@@ -26,13 +26,13 @@ public class Vector
 	{
 		return y;
 	}
-	public void setX()
+	public void setX(double x)
 	{
 		this.x = x;
 		this.r = Math.sqrt(x*x + y*y);
 		this.theta = Math.atan(y / x);
 	}
-	public void setY()
+	public void setY(double y)
 	{
 		this.y = y;
 		this.r = Math.sqrt(x*x + y*y);
