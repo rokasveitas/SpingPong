@@ -43,7 +43,6 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             offGraphics.fillRect(0,0,width,height);
         }else{
             startscreen = false;
-            
         }
     }
     public void paint(Graphics g){
