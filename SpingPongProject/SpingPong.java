@@ -4,7 +4,7 @@ import java.applet.*;
 import javax.swing.*;
 public class SpingPong extends Applet implements KeyListener, MouseListener{
     int width, height, gameSpeed;
-    boolean running = true;
+    boolean running = true, startscreen = true;
     Dimension offDimension;
     Image offImage;
     Graphics offGraphics;
@@ -37,6 +37,13 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             offImage = createImage(getSize().width, getSize().height);
             offGraphics = offImage.getGraphics();
             g.drawImage(offImage, 0, 0, this);
+        }
+        if(startscreen){
+            offGraphics.setColor(Color.black);
+            offGraphics.fillRect(0,0,width,height);
+        }else{
+            startscreen = false;
+            
         }
     }
     public void paint(Graphics g){
