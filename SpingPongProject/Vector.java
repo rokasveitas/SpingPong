@@ -18,7 +18,7 @@ public class Vector
 	{
 		return theta;
 	}
-	public double getX();
+	public double getX()
 	{
 		return x;
 	}
@@ -32,9 +32,9 @@ public class Vector
 		this.r = Math.sqrt(x*x + y*y);
 		this.theta = Math.atan(y / x);
 	}
-	public void setY)
+	public void setY()
 	{
-		this.y = y
+		this.y = y;
 		this.r = Math.sqrt(x*x + y*y);
 		this.theta = Math.atan(y / x);
 	}
@@ -46,8 +46,8 @@ public class Vector
 	}	
 	public static Vector add(Vector a, Vector b)
 	{
-		newX = a.getX() + b.getX();
-		newY = a.getY() + b.getY();
+		double newX = a.getX() + b.getX();
+		double newY = a.getY() + b.getY();
 		return new Vector(newX, newY);
 	}
 	public static double dot(Vector a, Vector b)
@@ -56,9 +56,8 @@ public class Vector
 	}
 	public static Vector unit(double theta)
 	{
-		newX = Math.cos(theta);
-		newY = Math.sin(theta);
+		double newX = Math.cos(theta);
+		double newY = Math.sin(theta);
 		return new Vector(newX, newY);
 	}
-
 }

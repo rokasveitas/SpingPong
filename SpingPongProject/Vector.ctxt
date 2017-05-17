@@ -1,0 +1,24 @@
+#BlueJ class context
+comment0.params=x\ y
+comment0.target=Vector(double,\ double)
+comment1.params=
+comment1.target=double\ getR()
+comment10.params=theta
+comment10.target=Vector\ unit(double)
+comment2.params=
+comment2.target=double\ getTheta()
+comment3.params=
+comment3.target=double\ getX()
+comment4.params=
+comment4.target=double\ getY()
+comment5.params=
+comment5.target=void\ setX()
+comment6.params=
+comment6.target=void\ setY()
+comment7.params=theta
+comment7.target=void\ rotate(double)
+comment8.params=a\ b
+comment8.target=Vector\ add(Vector,\ Vector)
+comment9.params=a\ b
+comment9.target=double\ dot(Vector,\ Vector)
+numComments=11
