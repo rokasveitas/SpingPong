@@ -42,13 +42,37 @@ public class Vector
     {
         this.x = x;
         this.r = Math.sqrt(x*x + y*y);
-        this.theta = Math.atan(y / x);
+        try{
+            this.theta = Math.atan(y / x);
+        } catch(Exception e)
+        {
+            this.theta = Math.atan((y + .0001) / x);
+        }
+        if(x < 0)
+        {
+            if(y >= 0) //quad II
+                theta += Math.PI;
+            else
+                theta -= Math.PI;
+        }
     }
     public void setY(double y)
     {
         this.y = y;
         this.r = Math.sqrt(x*x + y*y);
-        this.theta = Math.atan(y / x);
+        try{
+            this.theta = Math.atan(y / x);
+        } catch(Exception e)
+        {
+            this.theta = Math.atan((y + .0001) / x);
+        }
+        if(x < 0)
+        {
+            if(y >= 0) //quad II
+                theta += Math.PI;
+            else
+                theta -= Math.PI;
+        }
     }
     public void rotate(double theta)
     {
