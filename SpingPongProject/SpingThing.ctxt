@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=size
-comment0.target=SpingThing(double)
+comment0.params=size\ type
+comment0.target=SpingThing(double,\ java.lang.String)
 comment1.params=dt
 comment1.target=void\ timeInc(double)
 numComments=2

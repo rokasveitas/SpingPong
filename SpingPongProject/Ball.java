@@ -4,7 +4,7 @@ public class Ball extends SpingThing
     
     public Ball(double rad, Vector pos, Vector vel)
     {
-        super(rad);
+        super(rad, "ball");
         this.pos = pos;
         this.vel = vel;
         this.acc = new Vector(0, 0);

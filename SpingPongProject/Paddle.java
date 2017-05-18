@@ -6,7 +6,7 @@ public class Paddle extends SpingThing
     
     public Paddle(double width, Vector pos, double ang)
     {
-        super(width);
+        super(width, "paddle");
         this.pos = pos;
         this.ang = ang;
         omg = 0;
@@ -19,8 +19,5 @@ public class Paddle extends SpingThing
         ang += omg * dt;
         omg += alp * dt;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master
+
