@@ -19,4 +19,8 @@ public class Paddle extends SpingThing
         ang += omg * dt;
         omg += alp * dt;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/master
