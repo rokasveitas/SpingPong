@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 public class Paddle extends SpingThing
 {
     public double ang; //current angle of paddle
@@ -12,16 +11,3 @@ public class Paddle extends SpingThing
         omg += alp * dt;
     }
 }
-=======
-
-public class Paddle{
-    public Vector acc;
-    public Vector vel;
-    public Vector pos;
-    public double spin;
-    public double angle;
-    public Paddle(){
-        
-    }
-}
->>>>>>> origin/master
