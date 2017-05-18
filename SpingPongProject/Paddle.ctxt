@@ -1,18 +1,6 @@
 #BlueJ class context
-<<<<<<< HEAD
-<<<<<<< HEAD
-comment0.params=width\ ang\ pos
-comment0.target=Paddle(double,\ double,\ Vector)
+comment0.params=width\ pos\ ang
+comment0.target=Paddle(double,\ Vector,\ double)
 comment1.params=dt
 comment1.target=void\ timeInc(double)
 numComments=2
-=======
-comment0.params=
-comment0.target=Paddle()
-numComments=1
->>>>>>> origin/master
-=======
-comment0.params=dt
-comment0.target=void\ timeInc(double)
-numComments=1
->>>>>>> parent of e777ea1... SpingThing and Paddle creation

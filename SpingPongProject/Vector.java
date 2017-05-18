@@ -8,14 +8,19 @@ public class Vector
         this.x = x;
         this.y = y;
         this.r = Math.sqrt(x*x + y*y);
-        this.theta = Math.atan(y / x);
-        /*if(x < 0)
+        try{
+            this.theta = Math.atan(y / x);
+        } catch(Exception e)
+        {
+            this.theta = Math.atan((y + .0001) / x);
+        }
+        if(x < 0)
         {
             if(y >= 0) //quad II
-                theta += Math.PI / 2;
+                theta += Math.PI;
             else
-                theta -= Math.PI / 2;
-        } */               
+                theta -= Math.PI;
+        }
     }
     public double getR()
     {
