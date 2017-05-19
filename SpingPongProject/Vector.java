@@ -77,9 +77,18 @@ public class Vector
     public void rotate(double theta)
     {
         this.theta += theta;
+        theta %= 2*Math.PI;
         x = r * Math.cos(this.theta);
         y = r * Math.sin(this.theta);
-    }   
+    }
+    public void scale(double k)
+    {
+        if(k < 0)
+            rotate(Math.PI);
+        x *= Math.abs(k);
+        y *= Math.abs(k);
+        r *= Math.abs(k);
+    }
     public static Vector add(Vector a, Vector b)
     {
         double newX = a.getX() + b.getX();

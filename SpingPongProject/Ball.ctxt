@@ -1,6 +1,8 @@
 #BlueJ class context
 comment0.params=rad\ pos\ vel
 comment0.target=Ball(double,\ Vector,\ Vector)
-comment1.params=col
-comment1.target=void\ collide(SpingThing)
-numComments=2
+comment1.params=dt
+comment1.target=void\ timeInc(double)
+comment2.params=col
+comment2.target=void\ collide(SpingThing)
+numComments=3
