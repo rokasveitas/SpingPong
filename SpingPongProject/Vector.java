@@ -22,6 +22,10 @@ public class Vector
                 theta -= Math.PI;
         }
     }
+    public String toString()
+    {
+        return "(" + x + ", " + y + ")";
+    }
     public double getR()
     {
         return r;

@@ -1,6 +1,8 @@
 #BlueJ class context
 comment0.params=width\ pos\ ang
 comment0.target=Paddle(double,\ Vector,\ double)
-comment1.params=dt
-comment1.target=void\ timeInc(double)
-numComments=2
+comment1.params=
+comment1.target=java.lang.String\ toString()
+comment2.params=dt
+comment2.target=void\ timeInc(double)
+numComments=3
