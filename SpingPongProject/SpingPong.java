@@ -19,13 +19,15 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         addKeyListener(this);
         addMouseListener(this);
         gameSpeed = 15;
-        net = new SpingThing(150);
-        table = new SpingThing(200);
+        net = new SpingThing(150,"net");
+        table = new SpingThing(200,"table");
         paddle1 = new Paddle(50,new Vector(100,getSize().height/2), 3*Math.PI/4);
         paddle2 = new Paddle(50,new Vector(getSize().width - 100, getSize().height/2), Math.PI/4);
         ball = new Ball(10, new Vector(getSize().width/2,getSize().height/2),new Vector(0,0));
         player1score = 0;
         player2score = 0;
+        Friction fric = new Friction();
+        fric.start();
     }
     public void start(){
         
@@ -119,35 +121,65 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         if(c == '1'){
             startscreen = false;
         }
+        //Paddle1
+        //  Movement
         if(c == 'w'){
             paddle1.acc.y = -1;
+        }
+        if(c == 'a'){
+            paddle1.acc.x = -1;
         }
         if(c == 's'){
             paddle1.acc.y = 1;
         }
-        if(c == 'q'){
+        if(c == 'd'){
+            paddle1.acc.x = 1;
+        }
+        //  Spin
+        if(c == 'f'){
             paddle1.alp = .01;
         }
-        if(c == 'e'){
+        if(c == 'g'){
             paddle1.alp = -.01;
         }
+        //Paddle2
+        
         repaint();
         e.consume();
     }
     public void keyReleased( KeyEvent e ) {
         char c = e.getKeyChar();
         int keyCode = e.getKeyCode();
+        //Paddle1
+        //  Movement
         if(c == 'w'){
             paddle1.acc.y = 0;
+        }
+        if(c == 'a'){
+            paddle1.acc.x = 0;
         }
         if(c == 's'){
             paddle1.acc.y = 0;
         }
-        if(c == 'q'){
+        if(c == 'd'){
+            paddle1.acc.x = 0;
+        }
+        //  Spin
+        if(c == 'f'){
             paddle1.alp = 0;
         }
-        if(c == 'e'){
+        if(c == 'g'){
             paddle1.alp = 0;
+        }
+    }
+    class Friction extends Thread{
+        public void run(){
+            while(true){
+                paddle1.vel.x *= .75;
+                paddle1.vel.y *= .75;
+                paddle1.omg *= .95;
+                try{Thread.sleep(40);}catch(Exception k){}
+            }
         }
     }
     public static void main(String[] args){

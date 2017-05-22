@@ -42,20 +42,53 @@ public class Vector
     {
         this.x = x;
         this.r = Math.sqrt(x*x + y*y);
-        this.theta = Math.atan(y / x);
+        try{
+            this.theta = Math.atan(y / x);
+        } catch(Exception e)
+        {
+            this.theta = Math.atan((y + .0001) / x);
+        }
+        if(x < 0)
+        {
+            if(y >= 0) //quad II
+                theta += Math.PI;
+            else
+                theta -= Math.PI;
+        }
     }
     public void setY(double y)
     {
         this.y = y;
         this.r = Math.sqrt(x*x + y*y);
-        this.theta = Math.atan(y / x);
+        try{
+            this.theta = Math.atan(y / x);
+        } catch(Exception e)
+        {
+            this.theta = Math.atan((y + .0001) / x);
+        }
+        if(x < 0)
+        {
+            if(y >= 0) //quad II
+                theta += Math.PI;
+            else
+                theta -= Math.PI;
+        }
     }
     public void rotate(double theta)
     {
         this.theta += theta;
+        theta %= 2*Math.PI;
         x = r * Math.cos(this.theta);
         y = r * Math.sin(this.theta);
-    }   
+    }
+    public void scale(double k)
+    {
+        if(k < 0)
+            rotate(Math.PI);
+        x *= Math.abs(k);
+        y *= Math.abs(k);
+        r *= Math.abs(k);
+    }
     public static Vector add(Vector a, Vector b)
     {
         double newX = a.getX() + b.getX();
