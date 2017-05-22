@@ -147,7 +147,26 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             System.out.println(paddle1);
         }
         //Paddle2
-        
+        //  Movement
+        if(keyCode == KeyEvent.VK_UP){
+            paddle2.acc.y = -1;
+        }
+        if(keyCode == KeyEvent.VK_DOWN){
+            paddle2.acc.y = 1;
+        }
+        if(keyCode == KeyEvent.VK_LEFT){
+            paddle2.acc.x = -1;
+        }
+        if(keyCode == KeyEvent.VK_RIGHT){
+            paddle2.acc.x = 1;
+        }
+        //  Spin
+        if(c == '1'){
+            paddle2.alp = .01;
+        }
+        if(c == '2'){
+            paddle2.alp = -.01;
+        }
         repaint();
         e.consume();
     }
@@ -175,6 +194,27 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         if(c == 'g'){
             paddle1.alp = 0;
         }
+        //Paddle2
+        //  Movement
+        if(keyCode == KeyEvent.VK_UP){
+            paddle2.acc.y = 0;
+        }
+        if(keyCode == KeyEvent.VK_DOWN){
+            paddle2.acc.y = 0;
+        }
+        if(keyCode == KeyEvent.VK_LEFT){
+            paddle2.acc.x = 0;
+        }
+        if(keyCode == KeyEvent.VK_RIGHT){
+            paddle2.acc.x = 0;
+        }
+        //  Spin
+        if(c == '1'){
+            paddle2.alp = 0;
+        }
+        if(c == '2'){
+            paddle2.alp = 0;
+        }
     }
     class Friction extends Thread{
         public void run(){
@@ -182,6 +222,9 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 paddle1.vel.x *= .75;
                 paddle1.vel.y *= .75;
                 paddle1.omg *= .95;
+                paddle2.vel.x *= .75;
+                paddle2.vel.y *= .75;
+                paddle2.omg *= .95;
                 try{Thread.sleep(40);}catch(Exception k){}
             }
         }
@@ -212,6 +255,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         while(game.running){
             //Game Loop
             game.paddle1.timeInc(1);
+            game.paddle2.timeInc(1);
             try{Thread.sleep(game.gameSpeed);}catch(Exception k){}
             game.repaint();
         }
