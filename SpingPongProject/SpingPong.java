@@ -142,6 +142,10 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         if(c == 'g'){
             paddle1.alp = -.01;
         }
+        if(c == 'p')
+        {
+            System.out.println(paddle1);
+        }
         //Paddle2
         
         repaint();

@@ -13,11 +13,24 @@ public class Paddle extends SpingThing
         alp = 0;
     }
     
+    public String toString()
+    {
+        String out = super.toString();
+        out += "ang is " + ang + "\n";
+        out += "omg is " + omg + "\n";
+        out += "alp is " + alp + "\n";
+        return out;
+    }
+    
     public void timeInc(double dt) //changes vel and pos as time changes by dt
     {
         super.timeInc(dt);
         ang += omg * dt;
         omg += alp * dt;
+        if(omg >= .1)
+            omg = .1;
+        else if(omg <= -.1)
+            omg = -.1;
         ang %= 2 * Math.PI;
     }
 
