@@ -118,7 +118,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             destroy();
             System.exit(0);
         }
-        if(c == '1'){
+        if(c == '!'){
             startscreen = false;
         }
         //Paddle1
@@ -280,16 +280,53 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             //Game Loop
             
             //Check collisions
+            int p1tempx = (int) Math.abs(50*Math.cos(Math.PI*2 - game.paddle1.ang));
+            int p1tempy = (int) Math.abs(50*Math.sin(Math.PI*2 - game.paddle1.ang));
+            int p2tempx = (int) Math.abs(50*Math.cos(Math.PI*2 - game.paddle2.ang));
+            int p2tempy = (int) Math.abs(50*Math.sin(Math.PI*2 - game.paddle2.ang));
             //Left wall
-            if(game.paddle1.pos.x <= 0){
+            if(game.paddle1.pos.x - p1tempx <= 0){
                 if(game.paddle1.vel.x < 0){
                     game.paddle1.vel.x *= -.5;
                 }
             }
             //Right wall
-            if(game.paddle2.pos.x >= game.getSize().width){
+            if(game.paddle2.pos.x + p2tempx >= game.getSize().width){
                 if(game.paddle2.vel.x > 0){
                     game.paddle2.vel.x *= -.5;
+                }
+            }
+            //Middle wall
+            if(game.paddle1.pos.x + p1tempx >= game.getSize().width/2){
+                if(game.paddle1.vel.x > 0){
+                    game.paddle1.vel.x *= -.5;
+                }
+            }
+            if(game.paddle2.pos.x - p2tempx <= game.getSize().width/2){
+                if(game.paddle2.vel.x < 0){
+                    game.paddle2.vel.x *= -.5;
+                }
+            }
+            //Upper wall
+            if(game.paddle1.pos.y - p1tempy <= 0){
+                if(game.paddle1.vel.y < 0){
+                    game.paddle1.vel.y *= -.5;
+                }
+            }
+            if(game.paddle2.pos.y - p2tempy <= 0){
+                if(game.paddle2.vel.y < 0){
+                    game.paddle2.vel.y *= -.5;
+                }
+            }
+            //Lower wall
+            if(game.paddle1.pos.y + p1tempy >= game.getSize().height){
+                if(game.paddle1.vel.y > 0){
+                    game.paddle1.vel.y *= -1;
+                }
+            }
+            if(game.paddle2.pos.y + p2tempy >= game.getSize().height){
+                if(game.paddle2.vel.y > 0){
+                    game.paddle2.vel.y *= -1;
                 }
             }
             //Moves the things
