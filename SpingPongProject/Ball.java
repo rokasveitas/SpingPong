@@ -5,7 +5,7 @@ public class Ball extends SpingThing
     public static final double SPIN_K = 1;      //constant for how much spin affects vel on bounce
     public static final double SPIN_DEC = .8;   //decay factor for spin on bounce
     public static final double MAG_K = 1;       //Magnus effect constant
-    public static final double G_ACC = 1;       //acceleration of gravity
+    public static final double G_ACC = .03;       //acceleration of gravity
     public double spin; //positive is clockwise
     
     public Ball(double rad, Vector pos, Vector vel)
@@ -21,7 +21,8 @@ public class Ball extends SpingThing
         double magMag = MAG_K * Math.pow(size, 3) * spin * vel.getR(); //Magnus force magnitude
         Vector magF = Vector.unit(vel.getTheta() - Math.PI);
         magF.scale(magMag);
-        acc = Vector.add(magF, new Vector(0, -1*G_ACC));
+        //acc = Vector.add(magF, new Vector(0, -1*G_ACC));
+        acc = new Vector(0, G_ACC);
         super.timeInc(dt);
     }
     

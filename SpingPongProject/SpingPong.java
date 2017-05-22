@@ -144,7 +144,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         }
         if(c == 'p')
         {
-            System.out.println(paddle1);
+            System.out.println(ball);
         }
         //Paddle2
         //  Movement
@@ -274,7 +274,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         game.paddle1.pos.y = game.getSize().height/2;
         game.paddle2.pos.x = game.getSize().width - 200;
         game.paddle2.pos.y = game.getSize().height/2;
-        game.ball.pos.x = 200;
+        game.ball.pos.x = game.getSize().width/2;
         game.ball.pos.y = game.getSize().height/2 - 400;
         while(game.running){
             //Game Loop
@@ -327,6 +327,12 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             if(game.paddle2.pos.y + p2tempy >= game.getSize().height){
                 if(game.paddle2.vel.y > 0){
                     game.paddle2.vel.y *= -1;
+                }
+            }
+            //Table
+            if(game.ball.pos.y >= game.getSize().height/2 + 150){
+                if(game.ball.vel.y > 0){
+                    game.ball.vel.y *= -1;
                 }
             }
             //Moves the things
