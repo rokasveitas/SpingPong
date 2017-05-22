@@ -172,44 +172,68 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         //Paddle1
         //  Movement
         if(c == 'w'){
-            paddle1.acc.y = 0;
+            if(paddle1.acc.y < 0){
+                paddle1.acc.y = 0;
+            }
         }
         if(c == 'a'){
-            paddle1.acc.x = 0;
+            if(paddle1.acc.x < 0){
+                paddle1.acc.x = 0;
+            }
         }
         if(c == 's'){
-            paddle1.acc.y = 0;
+            if(paddle1.acc.y > 0){
+                paddle1.acc.y = 0;
+            }
         }
         if(c == 'd'){
-            paddle1.acc.x = 0;
+            if(paddle1.acc.x > 0){
+                paddle1.acc.x = 0;
+            }
         }
         //  Spin
         if(c == 'f'){
-            paddle1.alp = 0;
+            if(paddle1.alp > 0){
+                paddle1.alp = 0;
+            }
         }
         if(c == 'g'){
-            paddle1.alp = 0;
+            if(paddle1.alp < 0){
+                paddle1.alp = 0;
+            }
         }
         //Paddle2
         //  Movement
         if(keyCode == KeyEvent.VK_UP){
-            paddle2.acc.y = 0;
+            if(paddle2.acc.y < 0){
+                paddle2.acc.y = 0;
+            }
         }
         if(keyCode == KeyEvent.VK_DOWN){
-            paddle2.acc.y = 0;
+            if(paddle2.acc.y > 0){
+                paddle2.acc.y = 0;
+            }
         }
         if(keyCode == KeyEvent.VK_LEFT){
-            paddle2.acc.x = 0;
+            if(paddle2.acc.x < 0){
+                paddle2.acc.x = 0;
+            }
         }
         if(keyCode == KeyEvent.VK_RIGHT){
-            paddle2.acc.x = 0;
+            if(paddle2.acc.x > 0){
+                paddle2.acc.x = 0;
+            }
         }
         //  Spin
         if(c == '1'){
-            paddle2.alp = 0;
+            if(paddle2.alp > 0){
+                paddle2.alp = 0;
+            }
         }
         if(c == '2'){
-            paddle2.alp = 0;
+            if(paddle2.alp < 0){
+                paddle2.alp = 0;
+            }
         }
     }
     class Friction extends Thread{
@@ -250,8 +274,24 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         game.ball.pos.y = game.getSize().height/2 - 400;
         while(game.running){
             //Game Loop
+            
+            //Check collisions
+            //Left wall
+            if(game.paddle1.pos.x <= 0){
+                if(game.paddle1.vel.x < 0){
+                    game.paddle1.vel.x *= -.5;
+                }
+            }
+            //Right wall
+            if(game.paddle2.pos.x >= game.getSize().width){
+                if(game.paddle2.vel.x > 0){
+                    game.paddle2.vel.x *= -.5;
+                }
+            }
+            //Moves the things
             game.paddle1.timeInc(1);
             game.paddle2.timeInc(1);
+            game.ball.timeInc(1);
             try{Thread.sleep(game.gameSpeed);}catch(Exception k){}
             game.repaint();
         }
