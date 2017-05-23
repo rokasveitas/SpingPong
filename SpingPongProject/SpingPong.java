@@ -4,7 +4,7 @@ import java.applet.*;
 import javax.swing.*;
 public class SpingPong extends Applet implements KeyListener, MouseListener{
     int width, height, gameSpeed, player1score, player2score;
-    boolean running = true, startscreen = true;
+    boolean running = true, startscreen = true, rules = false, serve = false;
     Dimension offDimension;
     Image offImage;
     Graphics offGraphics;
@@ -60,8 +60,85 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             g.drawImage(offImage, 0, 0, this);
         }
         if(startscreen){
+            offGraphics.setColor(Color.black); 
+            offGraphics.fillRect(0, 0, getSize().width, getSize().height);
+            offGraphics.setColor(Color.white);
+            Font h = new Font("Impact", Font.BOLD, 108);
+            offGraphics.setFont(h);
+            offGraphics.drawString("Sping Pong",650, 200);
+            //creating 'Sping Pong' text
+        
+        
+            offGraphics.setColor(Color.white);
+            Font z = new Font("Impact", Font.BOLD, 32);
+            offGraphics.setFont(z);
+            offGraphics.drawString("Press '1' for single player       Press '?' for help      Press '2' for two player",370, 550);
+            //creating text instructions
+        
+            offGraphics.setColor(Color.blue);  
+            offGraphics.drawLine(880,400,820,350);
+            //creating blue paddle graphic
+        
+            offGraphics.setColor(Color.red);  
+            offGraphics.drawLine(1000,400,1060,350);
+            //creating red paddle graphic
+
+        
             offGraphics.setColor(Color.black);
-            offGraphics.fillRect(0,0,width,height);
+            offGraphics.drawOval(900, 300, 80, 80);
+            offGraphics.drawOval(920, 325, 5, 5);
+            offGraphics.drawOval(955, 325, 5, 5);
+            offGraphics.drawArc(923,265,115,20,0,-180);
+            offGraphics.setColor(Color.yellow);
+            offGraphics.fillOval(900, 300, 80, 80);
+            offGraphics.setColor(Color.black);
+            offGraphics.fillOval(920, 325, 5, 5);
+            offGraphics.fillOval(955, 325, 5, 5);
+            offGraphics.fillArc(923, 345, 35, 20, 0, -180);
+
+            //creating smiley ping pong graphic
+
+            if(rules){
+               offGraphics.setColor(Color.pink); 
+               offGraphics.fillRect(0, 0, getSize().width, getSize().height);
+               
+               offGraphics.setFont(h);
+               offGraphics.setColor(Color.red);
+               offGraphics.drawString("Press m to Return to Menu" , 340 , 220);  
+               
+               
+               Font i = new Font("Impact", Font.ITALIC, 30);
+               offGraphics.setFont(i);
+               offGraphics.setColor(Color.blue);
+               offGraphics.drawString("Press the Space bar to drop the ball and serve to your opponent.", 610, 300);
+               offGraphics.drawString(" Players will switch off serving every two points. A point is scored", 600, 330);
+               offGraphics.drawString("when a player fails to serve correctly, fails to return the ball,", 600, 360);
+               offGraphics.drawString("or a player strikes the ball with his/her paddle more than once in ", 600, 390); 
+               offGraphics.drawString("succession. The first player to reach 11 points wins the game, however,", 600, 420);
+               offGraphics.drawString(" a game must be won by at least a two point margin.", 600, 450);
+                              
+               Font p = new Font("Impact", Font.ITALIC, 60);
+               offGraphics.setFont(p);
+               offGraphics.setColor(Color.red);
+               offGraphics.drawString("Controls:" , 700 , 620); 
+               Font y = new Font("Impact", Font.ITALIC, 35);
+               offGraphics.setFont(y);
+               offGraphics.setColor(Color.black);
+               offGraphics.drawString("Player 1:" , 700 , 670);
+               Font j = new Font("Impact", Font.ITALIC, 30);
+               offGraphics.setFont(j);
+               offGraphics.setColor(Color.blue);
+               offGraphics.drawString("WASD, FG (Rotate left/right)" , 700 , 710);
+               Font o = new Font("Impact", Font.ITALIC, 35);
+               offGraphics.setFont(o);
+               offGraphics.setColor(Color.black);
+               offGraphics.drawString("Player 2:" , 700 , 755);
+               Font f = new Font("Impact", Font.ITALIC, 30);
+               offGraphics.setFont(f);
+               offGraphics.setColor(Color.blue);
+               offGraphics.drawString("Arrow keys, 1 and 2 (Rotate left/right)" , 700 , 795);
+               g.drawImage(offImage, 0, 0, this);
+            }
             g.drawImage(offImage, 0, 0, this);
         }else{
             startscreen = false;
@@ -118,8 +195,21 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             destroy();
             System.exit(0);
         }
-        if(c == '!'){
+        //Title Screen
+        //  Start Screen
+        if(c == '1'){
             startscreen = false;
+        }
+        //      Rules
+        if(c == '?'){
+            rules = true;
+        }
+        if(c == 'm'){
+            rules = false;
+        }
+        //Serve
+        if(keyCode == KeyEvent.VK_SPACE){
+            serve = true;
         }
         //Paddle1
         //  Movement
@@ -276,9 +366,37 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         game.paddle2.pos.y = game.getSize().height/2;
         game.ball.pos.x = game.getSize().width/2;
         game.ball.pos.y = game.getSize().height/2 - 400;
+        //Game rule variables
+        boolean pointscored = false;
+        String server = "one";
         while(game.running){
             //Game Loop
             
+            //StartScreen Loop
+            while(game.startscreen){
+                game.paddle1.pos.x = 200;
+                game.paddle1.pos.y = game.getSize().height/2;
+                game.paddle2.pos.x = game.getSize().width - 200;
+                game.paddle2.pos.y = game.getSize().height/2;
+                game.ball.pos.x = game.paddle1.pos.x;
+                game.ball.pos.y = game.getSize().height/2 - 400;
+            }
+            //Point Scored Reset
+            if(pointscored){
+                game.serve = false;
+                game.paddle1.pos.x = 200;
+                game.paddle1.pos.y = game.getSize().height/2;
+                game.paddle2.pos.x = game.getSize().width - 200;
+                game.paddle2.pos.y = game.getSize().height/2;
+                if(server.equals("one")){
+                    game.ball.pos.x = game.paddle1.pos.x;
+                }else if(server.equals("two")){
+                    game.ball.pos.x = game.paddle2.pos.x;
+                }
+                game.ball.pos.y = game.getSize().height/2 - 400;
+                try{Thread.sleep(500);}catch(Exception e){}
+                pointscored = false;
+            }
             //Check collisions
             int p1tempx = (int) Math.abs(50*Math.cos(Math.PI*2 - game.paddle1.ang));
             int p1tempy = (int) Math.abs(50*Math.sin(Math.PI*2 - game.paddle1.ang));
@@ -332,13 +450,15 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             //Table
             if(game.ball.pos.y >= game.getSize().height/2 + 150){
                 if(game.ball.vel.y > 0){
-                    game.ball.vel.y *= -1;
+                    game.ball.vel.y *= -.85;
                 }
             }
             //Moves the things
-            game.paddle1.timeInc(1);
-            game.paddle2.timeInc(1);
-            game.ball.timeInc(1);
+            if(game.serve){
+                game.paddle1.timeInc(1);
+                game.paddle2.timeInc(1);
+                game.ball.timeInc(1);
+            }
             try{Thread.sleep(game.gameSpeed);}catch(Exception k){}
             game.repaint();
         }
