@@ -3,6 +3,9 @@ import java.awt.event.*;
 import java.applet.*;
 import javax.swing.*;
 public class SpingPong extends Applet implements KeyListener, MouseListener{
+    public static final double TBL_BOUNCE = .9; //coef of elasticity of ball/table collision
+    public static final double WALL_BOUNCE = .5; //coef of elast of paddle/wall collision
+    
     int width, height, gameSpeed, player1score, player2score;
     boolean running = true, startscreen = true, rules = false, serve = false;
     Dimension offDimension;
@@ -430,52 +433,52 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             //Left wall
             if(game.paddle1.pos.x - p1tempx <= 0){
                 if(game.paddle1.vel.x < 0){
-                    game.paddle1.vel.x *= -.5;
+                    game.paddle1.vel.x *= -WALL_BOUNCE;
                 }
             }
             //Right wall
             if(game.paddle2.pos.x + p2tempx >= game.getSize().width){
                 if(game.paddle2.vel.x > 0){
-                    game.paddle2.vel.x *= -.5;
+                    game.paddle2.vel.x *= -WALL_BOUNCE;
                 }
             }
             //Middle wall
             if(game.paddle1.pos.x + p1tempx >= game.getSize().width/2){
                 if(game.paddle1.vel.x > 0){
-                    game.paddle1.vel.x *= -.5;
+                    game.paddle1.vel.x *= -WALL_BOUNCE;
                 }
             }
             if(game.paddle2.pos.x - p2tempx <= game.getSize().width/2){
                 if(game.paddle2.vel.x < 0){
-                    game.paddle2.vel.x *= -.5;
+                    game.paddle2.vel.x *= -WALL_BOUNCE;
                 }
             }
             //Upper wall
             if(game.paddle1.pos.y - p1tempy <= 0){
                 if(game.paddle1.vel.y < 0){
-                    game.paddle1.vel.y *= -.5;
+                    game.paddle1.vel.y *= -WALL_BOUNCE;
                 }
             }
             if(game.paddle2.pos.y - p2tempy <= 0){
                 if(game.paddle2.vel.y < 0){
-                    game.paddle2.vel.y *= -.5;
+                    game.paddle2.vel.y *= -WALL_BOUNCE;
                 }
             }
             //Lower wall
             if(game.paddle1.pos.y + p1tempy >= game.getSize().height){
                 if(game.paddle1.vel.y > 0){
-                    game.paddle1.vel.y *= -1;
+                    game.paddle1.vel.y *= -WALL_BOUNCE;
                 }
             }
             if(game.paddle2.pos.y + p2tempy >= game.getSize().height){
                 if(game.paddle2.vel.y > 0){
-                    game.paddle2.vel.y *= -1;
+                    game.paddle2.vel.y *= -WALL_BOUNCE;
                 }
             }
             //Table
             if(game.ball.pos.y >= game.getSize().height/2 + 150){
                 if(game.ball.vel.y > 0){
-                    game.ball.vel.y *= -.85;
+                    game.ball.vel.y *= -TBL_BOUNCE;
                 }
             }
             //Ball hitting paddle
