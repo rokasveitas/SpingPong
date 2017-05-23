@@ -36,10 +36,14 @@ public class Ball extends SpingThing
                 spin *= SPIN_DEC;
                 break;
             case "net":
-            
+                this.vel.setY(this.vel.getR() * (-.8));
+                this.vel.setX(0);
                 break;
             case "paddle":
-                
+                Vector par = col.getUnV().scaleR(Vector.dot(col.getUnV(), this.vel));
+                Vector perp = (Vector.add(this.vel, par.scaleR(-1)));
+                perp.scale(-1);
+                this.vel = Vector.add(par, perp);
                 break;
             default:
                 throw new Exception("SpingThing col needs type.");

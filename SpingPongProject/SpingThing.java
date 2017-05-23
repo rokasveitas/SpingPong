@@ -15,6 +15,9 @@ public class SpingThing
         this.type = type;
     }
     
+    public Vector getUnV()
+    { return new Vector(0, 0); }//to make the paddle method work
+    
     public String toString()
     {
         String out = "";

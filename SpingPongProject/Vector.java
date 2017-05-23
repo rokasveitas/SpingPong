@@ -93,6 +93,13 @@ public class Vector
         y *= Math.abs(k);
         r *= Math.abs(k);
     }
+    public Vector scaleR(double k) //returns a vector without changing itself
+    {
+        Vector out = new Vector(this.x * Math.abs(k), this.y * Math.abs(k));
+        if(k < 0)
+            out.rotate(Math.PI);
+        return out;
+    }
     public static Vector add(Vector a, Vector b)
     {
         double newX = a.getX() + b.getX();
