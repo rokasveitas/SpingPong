@@ -44,7 +44,6 @@ public class Ball extends SpingThing
                 Vector perp = (Vector.add(this.vel, par.scaleR(-1)));
                 perp.scale(-1);
                 this.vel = Vector.add(par, perp);
-                this.vel.setX(this.vel.getX() * -1);
                 break;
             default:
                 throw new Exception("SpingThing col needs type.");

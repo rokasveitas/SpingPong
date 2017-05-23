@@ -240,6 +240,10 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         {
             try{ball.collide(paddle1);} catch(Exception e1){}
         }
+        if(c == 'z')
+        {
+            startscreen = true;
+        }
         //Paddle2
         //  Movement
         if(keyCode == KeyEvent.VK_UP){
@@ -346,6 +350,23 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 try{Thread.sleep(40);}catch(Exception k){}
             }
         }
+    }
+    Point closestpointonline(float lx1, float ly1, float lx2, float ly2, float x0, float y0){
+        float A1 = ly2 - ly1;
+        float B1 = lx1 - lx2;
+        double C1 = A1*lx1 + B1*ly1;
+        double C2 = -B1*x0 + A1*y0;
+        double det = A1*A1 - -B1*B1;
+        double cx = 0;
+        double cy = 0;
+        if(det != 0){
+            cx = (float)((A1*C1 - B1*C2)/det);
+            cy = (float)((A1*C2 - -B1*C1)/det);
+        }else{
+            cx = x0;
+            cy = y0;
+        }
+        return new Point((int)(cx+.5),(int)(cy+.5));
     }
     public static void main(String[] args){
         JFrame frame = new JFrame();
@@ -457,10 +478,25 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                     game.ball.vel.y *= -.85;
                 }
             }
+            //Ball hitting paddle
+            if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 45){
+
+                System.out.println("It's close enough!");
+                int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle1.ang)+.5);
+                int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle1.ang)+.5);
+                Point p11 = new Point((int)game.paddle1.pos.x + xx, (int)game.paddle1.pos.y + yy);
+                Point p22 = new Point((int)game.paddle1.pos.x - xx, (int)game.paddle1.pos.y - yy);
+                                Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
+                if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
+                    try{game.ball.collide(game.paddle1);} catch(Exception e1){}
+                }
+            }
+          
             //Moves the things
-            if(game.serve){
-                game.paddle1.timeInc(1);
-                game.paddle2.timeInc(1);
+            game.paddle1.timeInc(1);
+            game.paddle2.timeInc(1);
+            if(game.serve)
+            {
                 game.ball.timeInc(1);
             }
             try{Thread.sleep(game.gameSpeed);}catch(Exception k){}
