@@ -236,6 +236,10 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         {
             System.out.println(ball);
         }
+        if(c == 'q')
+        {
+            try{ball.collide(paddle1);} catch(Exception e1){}
+        }
         //Paddle2
         //  Movement
         if(keyCode == KeyEvent.VK_UP){
