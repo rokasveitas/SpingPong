@@ -85,6 +85,13 @@ public class Vector
         x = r * Math.cos(this.theta);
         y = r * Math.sin(this.theta);
     }
+    public void rotateNonDir(double theta) //rotate, but theta % PI, not 2*PI
+    {
+	this.theta += theta;
+	theta %= Math.PI;
+	x = r * Math.cos(this.theta);
+	y = r * Math.sin(this.theta);
+    }
     public void scale(double k)
     {
         if(k < 0)
