@@ -481,25 +481,36 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                     game.ball.vel.y *= -TBL_BOUNCE;
                 }
             }
-            //Ball hitting paddle
-            if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 45){
-
-                System.out.println("It's close enough!");
-                int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle1.ang)+.5);
-                int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle1.ang)+.5);
-                Point p11 = new Point((int)game.paddle1.pos.x + xx, (int)game.paddle1.pos.y + yy);
-                Point p22 = new Point((int)game.paddle1.pos.x - xx, (int)game.paddle1.pos.y - yy);
-                                Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
-                if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
-                    try{game.ball.collide(game.paddle1);} catch(Exception e1){}
+            //Ball x Paddle1
+            if(game.serve){
+                if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 45){
+                    int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle1.ang)+.5);
+                    int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle1.ang)+.5);
+                    Point p11 = new Point((int)game.paddle1.pos.x + xx, (int)game.paddle1.pos.y + yy);
+                    Point p22 = new Point((int)game.paddle1.pos.x - xx, (int)game.paddle1.pos.y - yy);
+                    Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
+                    if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
+                        try{game.ball.collide(game.paddle1);} catch(Exception e1){}
+                    }
                 }
             }
-          
+            //Ball x Paddle2
+            if(game.serve){
+                if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle2.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle2.pos.y,2)) <= 45){
+                    int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle2.ang)+.5);
+                    int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle2.ang)+.5);
+                    Point p11 = new Point((int)game.paddle2.pos.x + xx, (int)game.paddle2.pos.y + yy);
+                    Point p22 = new Point((int)game.paddle2.pos.x - xx, (int)game.paddle2.pos.y - yy);
+                    Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
+                    if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
+                        try{game.ball.collide(game.paddle2);} catch(Exception e1){}
+                    }
+                }
+            }
             //Moves the things
             game.paddle1.timeInc(1);
             game.paddle2.timeInc(1);
-            if(game.serve)
-            {
+            if(game.serve){
                 game.ball.timeInc(1);
             }
             try{Thread.sleep(game.gameSpeed);}catch(Exception k){}
