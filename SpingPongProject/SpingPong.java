@@ -236,6 +236,15 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         if(c == 'g'){
             paddle1.alp = -.01;
         }
+        // Spin, but vel instead of alp
+        if(c == 'o')
+        {
+            paddle1.omg = .05;
+        }
+        if(c == 'i')
+        {
+            paddle1.omg = -.05;
+        }
 	//Debug
 	if(c == 't')
         {
@@ -256,6 +265,10 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         if(c == 'z')
         {
             startscreen = true;
+        }
+        if(c == '7')
+        {
+            ball.vel = new Vector(0, 0);
         }
         //Paddle2
         //  Movement
@@ -316,6 +329,10 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             if(paddle1.alp < 0){
                 paddle1.alp = 0;
             }
+        }
+        if(c == 'o' || c == 'i')
+        {
+            paddle1.omg = 0;
         }
         //Paddle2
         //  Movement

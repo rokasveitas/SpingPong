@@ -1,12 +1,22 @@
-------------------------------------------------------------------------
-This is the project README file. Here, you should describe your project.
-Tell the reader (someone who does not know anything about this project)
-all he/she needs to know. The comments should usually include at least:
-------------------------------------------------------------------------
+Key Actions
 
-PROJECT TITLE:
-PURPOSE OF PROJECT:
-VERSION or DATE:
-HOW TO START THIS PROJECT:
-AUTHORS:
-USER INSTRUCTIONS:
+Debug
+b: quit all
+t: print paddle1
+p: print ball
+q: collide with paddle 1
+e: collide with paddle 2
+z: back to startscren
+7: ball vel = (0, 0)
+
+Title Screen
+1: single player
+?: rules
+m: un-rules
+
+In-Game
+wasd: paddle1 trans
+fg: paddle1 rot
+arrows: paddle2 trans
+12: paddle2 rot
+
