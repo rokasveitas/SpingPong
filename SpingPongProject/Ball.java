@@ -19,7 +19,7 @@ public class Ball extends SpingThing
     public void timeInc(double dt)
     {
         double magMag = MAG_K * Math.pow(size, 3) * spin * vel.getR(); //Magnus force magnitude
-        Vector magF = Vector.unit(vel.getTheta() - Math.PI);
+        Vector magF = Vector.unit(vel.getTheta() - Math.PI/2);
         magF.scale(magMag);
         //acc = Vector.add(magF, new Vector(0, -1*G_ACC));
         acc = new Vector(0, G_ACC);
@@ -40,20 +40,29 @@ public class Ball extends SpingThing
                 this.vel.setX(0);
                 break;
             case "paddle":
-		Paddle p = (Paddle) col;
+                Paddle p = (Paddle) col;
+                System.out.println("Vel: " + this.vel);
                 Vector par = p.getUnV().scaleR(Vector.dot(p.getUnV(), this.vel));
+                
+                /*System.out.println("Par: " + par);
+                System.out.println("Ang: " + p.ang);
+                System.out.println("UnitV: " + p.getUnV() + "\n");
+                */
                 Vector perp = (Vector.add(this.vel, par.scaleR(-1)));
-		System.out.println("par is " + par + "\nperp is " + perp);
-		System.out.println("vel is " + this.vel);
-		perp.scale(-1);       
-		this.vel = Vector.add(par, perp);
-		this.vel.scale(-1);
-		System.out.println("par is " + par + "\nperp is " + perp);
-		System.out.println("vel is " + this.vel);
-		System.out.println("ang is " + p.ang);
-		System.out.println();
-		
-	      
+                
+                
+                //System.out.println("par is " + par + "\nperp is " + perp);
+                //System.out.println("vel is " + this.vel);
+                perp.scale(-1);       
+                
+                this.vel = Vector.add(par, perp);
+                
+                System.out.println("newVel is " + this.vel);
+             //   this.vel.scale(-1);
+                System.out.println("par is " + par + "\nperp is " + perp);
+                System.out.println("vel is " + this.vel);
+                System.out.println("ang is " + p.ang);
+                System.out.println();
                 break;
             default:
                 throw new Exception("SpingThing col needs type.");

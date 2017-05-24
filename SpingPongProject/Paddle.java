@@ -34,14 +34,14 @@ public class Paddle extends SpingThing
     {
         super.timeInc(dt);
         ang += omg * dt;
-        unitV.rotateNonDir(omg*dt);
-	unitV.setY(-unitV.getY());
+        ang %= 2 * Math.PI;
+        unitV = Vector.unit(ang);
         omg += alp * dt;
         if(omg >= .1)
             omg = .1;
         else if(omg <= -.1)
             omg = -.1;
-        ang %= 2 * Math.PI;
+        
     }
 
 }
