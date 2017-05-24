@@ -449,7 +449,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             if(game.paddle1.pos.x - p1tempx <= 0){
                 if(game.paddle1.vel.x < 0){
                     game.paddle1.vel.x *= -WALL_BOUNCE;
-		    System.out.println("Wall Bounce");
+                    System.out.println("Wall Bounce");
                 }
             }
             //Right wall
@@ -492,7 +492,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 }
             }
             //Table
-            if(game.ball.pos.y >= game.getSize().height/2 + 150){
+            if(game.ball.pos.y >= game.getSize().height/2 + 150 && (game.ball.pos.x <= game.getSize().width/2 - 600 && game.ball.pos.x >= 600)){
                 if(game.ball.vel.y > 0){
                     game.ball.vel.y *= -TBL_BOUNCE;
                     if(game.ball.pos.x <= game.getSize().width/2){
