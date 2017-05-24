@@ -5,7 +5,7 @@ import javax.swing.*;
 public class SpingPong extends Applet implements KeyListener, MouseListener{
     public static final double TBL_BOUNCE = .9; //coef of elasticity of ball/table collision
     public static final double WALL_BOUNCE = .5; //coef of elast of paddle/wall collision
-    
+    public static final double NET_BOUNCE = .35;
     int width, height, gameSpeed, player1score, player2score;
     boolean running = true, startscreen = true, rules = false, serve = false;
     Dimension offDimension;
@@ -555,7 +555,13 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 }
     	    }
     	    //Ball x Net
-    	    
+    	    if(game.ball.pos.x <= game.getSize().width/2){
+    	        if(game.ball.pos.x + game.ball.vel.x >= game.getSize().width/2){
+    	            game.ball.vel.x *= -NET_BOUNCE;
+    	        }
+	        }else if(game.ball.pos.x + game.ball.vel.x <= game.getSize().width/2){
+	            game.ball.vel.x *= -NET_BOUNCE;
+	        }
             //Moves the things
     	    //    System.out.println("Moving things.");
             game.paddle1.timeInc(1);
