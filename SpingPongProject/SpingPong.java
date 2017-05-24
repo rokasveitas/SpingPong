@@ -407,7 +407,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         //Game rule variables
         boolean pointscored = false;
         String server = "one";
-        int lefthit = 0,righthit = 0,p1hit = 0,p2hit = 0;
+        int lefthit = 0,righthit = 0,p1hit = 0,p2hit = 0, nexthitter = 1, servecount = 0;
         while(game.running){
             //Game Loop
     	    // System.out.println("In loop");
@@ -430,10 +430,23 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 game.paddle1.pos.y = game.getSize().height/2;
                 game.paddle2.pos.x = game.getSize().width - 200;
                 game.paddle2.pos.y = game.getSize().height/2;
+                if(servecount > 1){
+                    if(server.equals("one")){
+                        server = "two";
+                    }else{
+                        server = "one";
+                    }
+                }
                 if(server.equals("one")){
                     game.ball.pos.x = game.paddle1.pos.x;
+                    lefthit = 1;
+                    nexthitter = 1;
+                    servecount++;
                 }else if(server.equals("two")){
                     game.ball.pos.x = game.paddle2.pos.x;
+                    righthit = 1;
+                    nexthitter = 2;
+                    servecount++;
                 }
                 game.ball.pos.y = game.getSize().height/2 - 400;
                 try{Thread.sleep(500);}catch(Exception e){}
@@ -452,10 +465,42 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                     System.out.println("Wall Bounce");
                 }
             }
+            if(game.ball.pos.x <= 0){
+                if(nexthitter == 1){
+                    if(lefthit == 1){
+                        pointscored = true;
+                        game.player2score++;
+                    }
+                    if(lefthit == 0){
+                        pointscored = true;
+                        game.player1score++;
+                    }
+                }
+                if(nexthitter == 2){
+                    pointscored = true;
+                    game.player2score++;
+                }
+            }
             //Right wall
             if(game.paddle2.pos.x + p2tempx >= game.getSize().width){
                 if(game.paddle2.vel.x > 0){
                     game.paddle2.vel.x *= -WALL_BOUNCE;
+                }
+            }
+            if(game.ball.pos.x >= game.getSize().width){
+                if(nexthitter == 2){
+                    if(righthit == 1){
+                        pointscored = true;
+                        game.player1score++;
+                    }
+                    if(righthit == 0){
+                        pointscored = true;
+                        game.player2score++;
+                    }
+                }
+                if(nexthitter == 1){
+                    pointscored = true;
+                    game.player1score++;
                 }
             }
             //Middle wall
@@ -497,14 +542,32 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                     game.ball.vel.y *= -TBL_BOUNCE;
                     if(game.ball.pos.x <= game.getSize().width/2){
                         lefthit++;
+                        if(lefthit > 1){
+                            pointscored = true;
+                            game.player2score++;
+                        }
+                        if(nexthitter == 2){
+                            pointscored = true;
+                            game.player2score++;
+                        }
                     }else{
                         righthit++;
+                        if(righthit > 1){
+                            pointscored = true;
+                            game.player1score++;
+                        }
+                        if(nexthitter == 1){
+                            pointscored = true;
+                            game.player1score++;
+                        }
                     }
                 }
             }
+    	    // System.out.println("Should be checking ball hitting paddle...");
             //Ball x Paddle1
             if(game.serve){
-                if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 45){
+                if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 55){
+            		// System.out.println("It's close enough!");
                     int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle1.ang)+.5);
                     int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle1.ang)+.5);
                     Point p11 = new Point((int)game.paddle1.pos.x + xx, (int)game.paddle1.pos.y + yy);
@@ -512,47 +575,44 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                     Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
                     if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
                         try{game.ball.collide(game.paddle1);} catch(Exception e1){}
-                        p1hit++;
+                        if(nexthitter == 2){
+                            pointscored = true;
+                            game.player2score++;
+                        }else{
+                            if(lefthit == 0){
+                                pointscored = true;
+                                game.player2score++;
+                            }
+                        }
+                        nexthitter = 2;
+                        lefthit = 0;
+                        righthit = 0;
                     }
-                }
-            }
-            //Ball x Paddle2
-            if(game.serve){
-                if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle2.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle2.pos.y,2)) <= 45){
+        	    }
+        	    //Ball x Paddle2
+        	    if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle2.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle2.pos.y,2)) <= 55){
+                    // System.out.println("It's close enough!");                                                                                                                                     
                     int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle2.ang)+.5);
                     int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle2.ang)+.5);
-                    Point p11 = new Point((int)game.paddle2.pos.x + xx, (int)game.paddle2.pos.y + yy);
-                    Point p22 = new Point((int)game.paddle2.pos.x - xx, (int)game.paddle2.pos.y - yy);
-                    Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
+                    Point p11 = new Point((int)game.paddle1.pos.x + xx, (int)game.paddle2.pos.y + yy);
+                    Point p22 = new Point((int)game.paddle1.pos.x - xx, (int)game.paddle2.pos.y - yy);
+            		Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
                     if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
                         try{game.ball.collide(game.paddle2);} catch(Exception e1){}
-                        p2hit++;
+                        if(nexthitter == 1){
+                            pointscored = true;
+                            game.player1score++;
+                        }else{
+                            if(righthit == 0){
+                                pointscored = true;
+                                game.player1score++;
+                            }
+                        }
+                        nexthitter = 1;
+                        lefthit = 0;
+                        righthit = 0;
                     }
-                }
-            }
-    	    // System.out.println("Should be checking ball hitting paddle...");
-            //Ball hitting paddle
-            if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 45){
-        		// System.out.println("It's close enough!");
-                int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle1.ang)+.5);
-                int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle1.ang)+.5);
-                Point p11 = new Point((int)game.paddle1.pos.x + xx, (int)game.paddle1.pos.y + yy);
-                Point p22 = new Point((int)game.paddle1.pos.x - xx, (int)game.paddle1.pos.y - yy);
-                Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
-                if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
-                    try{game.ball.collide(game.paddle1);} catch(Exception e1){}
-                }
-    	    }
-    	    if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle2.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle2.pos.y,2)) <= 45){
-                // System.out.println("It's close enough!");                                                                                                                                     
-                int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle2.ang)+.5);
-                int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle2.ang)+.5);
-                Point p11 = new Point((int)game.paddle1.pos.x + xx, (int)game.paddle2.pos.y + yy);
-                Point p22 = new Point((int)game.paddle1.pos.x - xx, (int)game.paddle2.pos.y - yy);
-        		Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
-                if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
-                    try{game.ball.collide(game.paddle2);} catch(Exception e1){}
-                }
+        	    }
     	    }
     	    //Ball x Net
     	    if(game.ball.pos.x <= game.getSize().width/2){
