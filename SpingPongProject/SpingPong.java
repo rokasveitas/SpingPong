@@ -5,7 +5,7 @@ import javax.swing.*;
 public class SpingPong extends Applet implements KeyListener, MouseListener{
     public static final double TBL_BOUNCE = .9; //coef of elasticity of ball/table collision
     public static final double WALL_BOUNCE = .5; //coef of elast of paddle/wall collision
-    
+    public static final double NET_BOUNCE = .35;
     int width, height, gameSpeed, player1score, player2score;
     boolean running = true, startscreen = true, rules = false, serve = false;
     Dimension offDimension;
@@ -466,7 +466,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             if(game.paddle1.pos.x - p1tempx <= 0){
                 if(game.paddle1.vel.x < 0){
                     game.paddle1.vel.x *= -WALL_BOUNCE;
-		    System.out.println("Wall Bounce");
+                    System.out.println("Wall Bounce");
                 }
             }
             //Right wall
@@ -509,7 +509,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 }
             }
             //Table
-            if(game.ball.pos.y >= game.getSize().height/2 + 150){
+            if(game.ball.pos.y >= game.getSize().height/2 + 150 && (game.ball.pos.x <= game.getSize().width/2 - 600 && game.ball.pos.x >= 600)){
                 if(game.ball.vel.y > 0){
                     game.ball.vel.y *= -TBL_BOUNCE;
                     if(game.ball.pos.x <= game.getSize().width/2){
@@ -572,7 +572,13 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 }
     	    }
     	    //Ball x Net
-    	    
+    	    if(game.ball.pos.x <= game.getSize().width/2){
+    	        if(game.ball.pos.x + game.ball.vel.x >= game.getSize().width/2){
+    	            game.ball.vel.x *= -NET_BOUNCE;
+    	        }
+	        }else if(game.ball.pos.x + game.ball.vel.x <= game.getSize().width/2){
+	            game.ball.vel.x *= -NET_BOUNCE;
+	        }
             //Moves the things
     	    //    System.out.println("Moving things.");
             game.paddle1.timeInc(1);
