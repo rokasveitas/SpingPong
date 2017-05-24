@@ -40,10 +40,20 @@ public class Ball extends SpingThing
                 this.vel.setX(0);
                 break;
             case "paddle":
-                Vector par = col.getUnV().scaleR(Vector.dot(col.getUnV(), this.vel));
+		Paddle p = (Paddle) col;
+                Vector par = p.getUnV().scaleR(Vector.dot(p.getUnV(), this.vel));
                 Vector perp = (Vector.add(this.vel, par.scaleR(-1)));
-                perp.scale(-1);
-                this.vel = Vector.add(par, perp);
+		System.out.println("par is " + par + "\nperp is " + perp);
+		System.out.println("vel is " + this.vel);
+		perp.scale(-1);       
+		this.vel = Vector.add(par, perp);
+		this.vel.scale(-1);
+		System.out.println("par is " + par + "\nperp is " + perp);
+		System.out.println("vel is " + this.vel);
+		System.out.println("ang is " + p.ang);
+		System.out.println();
+		
+	      
                 break;
             default:
                 throw new Exception("SpingThing col needs type.");

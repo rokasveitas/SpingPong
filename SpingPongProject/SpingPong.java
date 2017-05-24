@@ -213,6 +213,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         //Serve
         if(keyCode == KeyEvent.VK_SPACE){
             serve = true;
+	    // System.out.println("Space");
         }
         //Paddle1
         //  Movement
@@ -235,6 +236,11 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         if(c == 'g'){
             paddle1.alp = -.01;
         }
+	//Debug
+	if(c == 't')
+        {
+	    System.out.println(paddle1);
+	}
         if(c == 'p')
         {
             System.out.println(ball);
@@ -243,6 +249,10 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         {
             try{ball.collide(paddle1);} catch(Exception e1){}
         }
+	if(c == 'e')
+        {
+	    try{ball.collide(paddle2);} catch(Exception e2){}
+	}
         if(c == 'z')
         {
             startscreen = true;
@@ -399,18 +409,21 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         String server = "one";
         while(game.running){
             //Game Loop
-            
-            //StartScreen Loop
-            while(game.startscreen){
+	    // System.out.println("In loop");
+	    // System.out.println("Startscreen is " + game.startscreen);
+	    //StartScreen Loop
+            if(game.startscreen){
                 game.paddle1.pos.x = 200;
                 game.paddle1.pos.y = game.getSize().height/2;
                 game.paddle2.pos.x = game.getSize().width - 200;
                 game.paddle2.pos.y = game.getSize().height/2;
                 game.ball.pos.x = game.paddle1.pos.x;
                 game.ball.pos.y = game.getSize().height/2 - 400;
+		game.ball.vel = new Vector(0, 0);
             }
             //Point Scored Reset
             if(pointscored){
+		System.out.println("pointscored true");
                 game.serve = false;
                 game.paddle1.pos.x = 200;
                 game.paddle1.pos.y = game.getSize().height/2;
@@ -426,6 +439,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 pointscored = false;
             }
             //Check collisions
+	    // System.out.println("Checking collinsions");
             int p1tempx = (int) Math.abs(50*Math.cos(Math.PI*2 - game.paddle1.ang));
             int p1tempy = (int) Math.abs(50*Math.sin(Math.PI*2 - game.paddle1.ang));
             int p2tempx = (int) Math.abs(50*Math.cos(Math.PI*2 - game.paddle2.ang));
@@ -434,6 +448,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             if(game.paddle1.pos.x - p1tempx <= 0){
                 if(game.paddle1.vel.x < 0){
                     game.paddle1.vel.x *= -WALL_BOUNCE;
+		    System.out.println("Wall Bounce");
                 }
             }
             //Right wall
@@ -481,6 +496,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                     game.ball.vel.y *= -TBL_BOUNCE;
                 }
             }
+<<<<<<< HEAD
             //Ball x Paddle1
             if(game.serve){
                 if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 45){
@@ -507,14 +523,46 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                     }
                 }
             }
+=======
+	    // System.out.println("Should be checking ball hitting paddle...");
+            //Ball hitting paddle
+            if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 45){
+
+		// System.out.println("It's close enough!");
+                int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle1.ang)+.5);
+                int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle1.ang)+.5);
+                Point p11 = new Point((int)game.paddle1.pos.x + xx, (int)game.paddle1.pos.y + yy);
+                Point p22 = new Point((int)game.paddle1.pos.x - xx, (int)game.paddle1.pos.y - yy);
+                                Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
+                if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
+                    try{game.ball.collide(game.paddle1);} catch(Exception e1){}
+                }
+	     }
+	    if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle2.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle2.pos.y,2)) <= 45){
+
+                // System.out.println("It's close enough!");                                                                                                                                     
+                int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle2.ang)+.5);
+                int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle2.ang)+.5);
+                Point p11 = new Point((int)game.paddle1.pos.x + xx, (int)game.paddle2.pos.y + yy);
+                Point p22 = new Point((int)game.paddle1.pos.x - xx, (int)game.paddle2.pos.y - yy);
+		Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
+                if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
+                    try{game.ball.collide(game.paddle2);} catch(Exception e1){}
+                }
+	    }
+>>>>>>> origin/master
             //Moves the things
+	    //    System.out.println("Moving things.");
             game.paddle1.timeInc(1);
             game.paddle2.timeInc(1);
             if(game.serve){
                 game.ball.timeInc(1);
+		//	System.out.println("Served");
             }
             try{Thread.sleep(game.gameSpeed);}catch(Exception k){}
-            game.repaint();
+	    // System.out.println("Repainting");
+	    game.repaint();
+	    //System.out.println("Ending loop");
         }
     }
 }
