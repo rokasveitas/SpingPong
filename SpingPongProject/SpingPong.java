@@ -579,7 +579,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             //Table
             if(game.ball.pos.y >= game.getSize().height/2 + 150 && (game.ball.pos.x <= game.getSize().width - 600 && game.ball.pos.x >= 600)){
                 if(game.ball.vel.y > 0){
-                    game.ball.vel.y *= -TBL_BOUNCE;
+                    game.ball.vel.y *= -1;  //CHANGE LATER
                     if(game.ball.pos.x <= game.getSize().width/2){
                         lefthit++;
                         if(lefthit > 1){
@@ -605,7 +605,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             }
             // System.out.println("Should be checking ball hitting paddle...");
             //Ball x Paddle1
-            if(game.serve && delay > 20){
+            if(game.serve && delay > 0){
                 delay = 0;
                 if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 55){
                     // System.out.println("It's close enough!");
@@ -639,6 +639,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                     Point p22 = new Point((int)game.paddle2.pos.x - xx, (int)game.paddle2.pos.y - yy);
                     Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
                     if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
+                        System.out.println("Try to col with 2");
                         try{game.ball.collide(game.paddle2);} catch(Exception e1){}
                         if(nexthitter == 1){
                             pointscored = true;

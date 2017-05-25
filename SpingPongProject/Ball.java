@@ -31,6 +31,7 @@ public class Ball extends SpingThing
         switch(col.type)
         {
             case "table":
+                System.out.println("Col with table");
                 this.vel.setY(-1 * this.vel.getY());
                 this.vel.setX(this.vel.getX() + SPIN_K * this.spin);
                 spin *= SPIN_DEC;
@@ -40,6 +41,7 @@ public class Ball extends SpingThing
                 this.vel.setX(0);
                 break;
             case "paddle":
+                System.out.println("Collision!");
                 Paddle p = (Paddle) col;
                 System.out.println("Vel: " + this.vel);
                 Vector par = p.getUnV().scaleR(Vector.dot(p.getUnV(), this.vel));
@@ -53,17 +55,18 @@ public class Ball extends SpingThing
                 
                 //System.out.println("par is " + par + "\nperp is " + perp);
                 //System.out.println("vel is " + this.vel);
-                perp.scale(-1);       
-                
+                par.scale(-1);
                 this.vel = Vector.add(par, perp);
+                this.vel.setY(this.vel.getY()*(-1));
                 
+                /*
                 System.out.println("newVel is " + this.vel);
              //   this.vel.scale(-1);
                 System.out.println("par is " + par + "\nperp is " + perp);
                 System.out.println("vel is " + this.vel);
                 System.out.println("ang is " + p.ang);
                 System.out.println();
-                break;
+                */break;
             default:
                 throw new Exception("SpingThing col needs type.");
         }
