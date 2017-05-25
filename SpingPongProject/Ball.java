@@ -55,9 +55,10 @@ public class Ball extends SpingThing
                 
                 //System.out.println("par is " + par + "\nperp is " + perp);
                 //System.out.println("vel is " + this.vel);
-                perp.scale(-1);       
-                
+                par.scale(-1);
                 this.vel = Vector.add(par, perp);
+                this.vel.setY(this.vel.getY()*(-1));
+                
                 /*
                 System.out.println("newVel is " + this.vel);
              //   this.vel.scale(-1);
