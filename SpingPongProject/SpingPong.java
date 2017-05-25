@@ -422,7 +422,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         game.ball.pos.x = game.getSize().width/2;
         game.ball.pos.y = game.getSize().height/2 - 400;
         //Game rule variables
-        boolean pointscored = false;
+        boolean pointscored = true;
         String server = "one";
         int lefthit = 0,righthit = 0,p1hit = 0,p2hit = 0, nexthitter = 1, servecount = 0, delay = 21;
         while(game.running){
@@ -447,6 +447,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 game.paddle1.pos.y = game.getSize().height/2;
                 game.paddle2.pos.x = game.getSize().width - 200;
                 game.paddle2.pos.y = game.getSize().height/2;
+                game.ball.vel = new Vector(0, 0);
                 if(servecount > 1){
                     if(server.equals("one")){
                         server = "two";
@@ -551,6 +552,28 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             if(game.paddle2.pos.y + p2tempy >= game.getSize().height){
                 if(game.paddle2.vel.y > 0){
                     game.paddle2.vel.y *= -WALL_BOUNCE;
+                }
+            }
+            if(game.ball.pos.y >= game.getSize().height){
+                if(nexthitter == 1){
+                    if(lefthit == 1){
+                        pointscored = true;
+                        game.player2score++;
+                    }
+                    if(lefthit == 0){
+                        pointscored = true;
+                        game.player1score++;
+                    }
+                }
+                if(nexthitter == 2){
+                    if(righthit == 1){
+                        pointscored = true;
+                        game.player1score++;
+                    }
+                    if(righthit == 0){
+                        pointscored = true;
+                        game.player2score++;
+                    }
                 }
             }
             //Table
