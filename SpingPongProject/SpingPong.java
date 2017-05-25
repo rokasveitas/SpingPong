@@ -245,11 +245,11 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         {
             paddle1.omg = -.05;
         }
-    //Debug
-    if(c == 't')
-        {
-        System.out.println(paddle1);
-    }
+        //Debug
+        if(c == 't')
+            {
+            System.out.println(paddle1);
+        }
         if(c == 'p')
         {
             System.out.println(ball);
@@ -258,10 +258,10 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         {
             try{ball.collide(paddle1);} catch(Exception e1){}
         }
-    if(c == 'e')
-        {
-        try{ball.collide(paddle2);} catch(Exception e2){}
-    }
+        if(c == 'e')
+            {
+            try{ball.collide(paddle2);} catch(Exception e2){}
+        }
         if(c == 'z')
         {
             startscreen = true;
@@ -577,7 +577,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 }
             }
             //Table
-            if(game.ball.pos.y >= game.getSize().height/2 + 150 && (game.ball.pos.x <= game.getSize().width - 600 && game.ball.pos.x >= 600)){
+            if(game.ball.pos.y >= game.getSize().height/2 + 150 && (game.ball.pos.x <= game.getSize().width - 300 && game.ball.pos.x >= 600)){
                 if(game.ball.vel.y > 0){
                     game.ball.vel.y *= -1;  //CHANGE LATER
                     if(game.ball.pos.x <= game.getSize().width/2){
@@ -665,6 +665,12 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 game.ball.vel.x *= -NET_BOUNCE;
             }
             //Moves the things
+            //Checks for game win
+            if(game.player1score > 10 || game.player2score > 10){
+                if(Math.abs(game.player1score - game.player2score) > 1){
+                    game.startscreen = true;
+                }
+            }
             //    System.out.println("Moving things.");
             game.paddle1.timeInc(1);
             game.paddle2.timeInc(1);
