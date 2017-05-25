@@ -605,7 +605,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             }
             // System.out.println("Should be checking ball hitting paddle...");
             //Ball x Paddle1
-            if(game.serve && delay > 0){
+            if(game.serve /*&& delay > 0*/){
                 delay = 0;
                 if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 55){
                     // System.out.println("It's close enough!");
