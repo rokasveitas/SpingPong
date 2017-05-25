@@ -5,7 +5,8 @@ public class Ball extends SpingThing
     public static final double SPIN_K = 1;      //constant for how much spin affects vel on bounce
     public static final double SPIN_DEC = .8;   //decay factor for spin on bounce
     public static final double MAG_K = 1;       //Magnus effect constant
-    public static final double G_ACC = .03;       //acceleration of gravity
+    public static final double G_ACC = .06;       //acceleration of gravity
+    public static final double COEF_PAD = 1.25;  //coefficient of elasticity of paddle/ball collision
     public double spin; //positive is clockwise
     
     public Ball(double rad, Vector pos, Vector vel)
@@ -58,8 +59,9 @@ public class Ball extends SpingThing
                 par.scale(-1);
                 Vector temp = Vector.add(par, perp);
                 temp.setY(-1 * temp.getY());
-                temp = Vector.add(temp, p.vel.scaleR(2));
+                temp = Vector.add(temp, p.vel.scaleR(COEF_PAD));
                 this.vel = temp;
+                timeInc(3);
                 
                 /*
                 System.out.println("newVel is " + this.vel);
