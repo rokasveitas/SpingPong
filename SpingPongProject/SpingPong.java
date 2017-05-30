@@ -236,6 +236,11 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         if(c == 'g'){
             paddle1.alp = -.01;
         }
+        if(c == 'h')
+        {
+            paddle1.omg = 0;
+            paddle1.alp = 0;
+        }
         // Spin, but vel instead of alp
         if(c == 'o')
         {
@@ -290,6 +295,11 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         }
         if(c == '2'){
             paddle2.alp = -.01;
+        }
+        if(c == '3')
+        {
+            paddle2.omg = 0;
+            paddle2.alp = 0;
         }
         repaint();
         e.consume();
