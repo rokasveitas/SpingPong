@@ -34,7 +34,7 @@ public class Paddle extends SpingThing
     {
         super.timeInc(dt);
         ang += omg * dt;
-        ang %= 2 * Math.PI;
+        ang %=  Math.PI;
         unitV = Vector.unit(ang);
         omg += alp * dt;
         if(omg >= .1)
