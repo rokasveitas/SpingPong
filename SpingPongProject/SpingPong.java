@@ -225,6 +225,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         //  Movement
         if(c == 'w'){
             paddle1.acc.y = -1;
+            
         }
         if(c == 'a'){
             paddle1.acc.x = -1;
@@ -242,11 +243,24 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         if(c == 'g'){
             paddle1.alp = -.01;
         }
+<<<<<<< HEAD
         if(c == 'j')
         {
             paddle1.alp = 0;
             paddle1.omg = 0;
         }
+=======
+        if(c == 'h')
+        {
+            paddle1.omg = 0;
+            paddle1.alp = 0;
+        }
+		if(c == 'j')
+		{
+			paddle1.alp = 0;
+			paddle1.omg = 0;
+		}
+>>>>>>> origin/master
         // Spin, but vel instead of alp
         if(c == 'o')
         {
@@ -302,11 +316,24 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         if(c == '2'){
             paddle2.alp = -.01;
         }
+<<<<<<< HEAD
         if(c == '/')
         {
             paddle2.alp = 0;
             paddle2.omg = 0;
         }
+=======
+        if(c == '3')
+        {
+            paddle2.omg = 0;
+            paddle2.alp = 0;
+        }
+		if(c == '/')
+		{
+			paddle2.alp = 0;
+			paddle2.omg = 0;
+		}
+>>>>>>> origin/master
         repaint();
         e.consume();
     }
@@ -666,6 +693,57 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 righthit = 0;
             }
                 delay = 0;
+<<<<<<< HEAD
+=======
+				if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 55){
+					// System.out.println("It's close enough!");
+					int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle1.ang)+.5);
+					int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle1.ang)+.5);
+					Point p11 = new Point((int)game.paddle1.pos.x + xx, (int)game.paddle1.pos.y + yy);
+					Point p22 = new Point((int)game.paddle1.pos.x - xx, (int)game.paddle1.pos.y - yy);
+					Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
+					if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
+						try{game.ball.collide(game.paddle1);} catch(Exception e1){}
+						if(nexthitter == 2){
+							pointscored = true;
+							game.player2score++;
+						}else{
+							if(lefthit == 0){
+								pointscored = true;
+								game.player2score++;
+							}
+						}
+						nexthitter = 2;
+						lefthit = 0;
+						righthit = 0;
+					}
+				}
+				//Ball x Paddle2
+				if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle2.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle2.pos.y,2)) <= 55){
+					// System.out.println("It's close enough!");
+					int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle2.ang)+.5);
+					int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle2.ang)+.5);
+					Point p11 = new Point((int)game.paddle2.pos.x + xx, (int)game.paddle2.pos.y + yy);
+					Point p22 = new Point((int)game.paddle2.pos.x - xx, (int)game.paddle2.pos.y - yy);
+					Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
+					if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
+						System.out.println("Try to col with 2");
+						try{game.ball.collide(game.paddle2);} catch(Exception e1){}
+						if(nexthitter == 1){
+							pointscored = true;
+							game.player1score++;
+						}else{
+							if(righthit == 0){
+								pointscored = true;
+								game.player1score++;
+							}
+						}
+						nexthitter = 1;
+						lefthit = 0;
+						righthit = 0;
+					}
+				}
+>>>>>>> origin/master
             }
       
         
@@ -681,6 +759,8 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             //Checks for game win
             if(game.player1score > 10 || game.player2score > 10){
                 if(Math.abs(game.player1score - game.player2score) > 1){
+                    game.player1score = 0;
+                    game.player2score = 0;
                     game.startscreen = true;
                 }
             }

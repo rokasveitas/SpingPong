@@ -27,8 +27,13 @@ objectbench.height=76
 objectbench.width=934
 package.editor.height=561
 package.editor.width=826
+<<<<<<< HEAD
+package.editor.x=40
+package.editor.y=37
+=======
 package.editor.x=0
 package.editor.y=23
+>>>>>>> origin/master
 package.numDependencies=8
 package.numTargets=5
 package.showExtends=true
