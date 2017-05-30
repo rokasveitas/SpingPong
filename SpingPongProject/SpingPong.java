@@ -225,6 +225,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         //  Movement
         if(c == 'w'){
             paddle1.acc.y = -1;
+            
         }
         if(c == 'a'){
             paddle1.acc.x = -1;
@@ -696,6 +697,8 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             //Checks for game win
             if(game.player1score > 10 || game.player2score > 10){
                 if(Math.abs(game.player1score - game.player2score) > 1){
+                    game.player1score = 0;
+                    game.player2score = 0;
                     game.startscreen = true;
                 }
             }
