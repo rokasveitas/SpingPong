@@ -7,7 +7,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
     public static final double WALL_BOUNCE = .5; //coef of elast of paddle/wall collision
     public static final double NET_BOUNCE = .35;
     int width, height, gameSpeed, player1score, player2score;
-    boolean running = true, startscreen = true, rules = false, serve = false, near1 = false, near2 = false;
+    boolean running = true, startscreen = true, rules = false, serve = false, abovep1 = false, abovep2 = false, swathp1 = false, swathp2 = false;
     Dimension offDimension;
     Image offImage;
     Graphics offGraphics;
@@ -243,13 +243,13 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         if(c == 'g'){
             paddle1.alp = -.01;
         }
-<<<<<<< HEAD
+
         if(c == 'j')
         {
             paddle1.alp = 0;
             paddle1.omg = 0;
         }
-=======
+
         if(c == 'h')
         {
             paddle1.omg = 0;
@@ -260,7 +260,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
 			paddle1.alp = 0;
 			paddle1.omg = 0;
 		}
->>>>>>> origin/master
+
         // Spin, but vel instead of alp
         if(c == 'o')
         {
@@ -316,13 +316,13 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         if(c == '2'){
             paddle2.alp = -.01;
         }
-<<<<<<< HEAD
+
         if(c == '/')
         {
             paddle2.alp = 0;
             paddle2.omg = 0;
         }
-=======
+
         if(c == '3')
         {
             paddle2.omg = 0;
@@ -333,7 +333,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
 			paddle2.alp = 0;
 			paddle2.omg = 0;
 		}
->>>>>>> origin/master
+
         repaint();
         e.consume();
     }
@@ -649,104 +649,11 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 }
             }
             // System.out.println("Should be checking ball hitting paddle...");
-            //Ball x Paddle1
-
-
-            int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle1.ang)+.5);
-            int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle1.ang)+.5);
-            Point p11 = new Point((int)game.paddle1.pos.x + xx, (int)game.paddle1.pos.y + yy);
-            Point p22 = new Point((int)game.paddle1.pos.x - xx, (int)game.paddle1.pos.y - yy);
-            double paddleSlope = (p11.y - p22.y) / (p11.x - p22.x);
-            double ballslope = game.ball.vel.y / game.ball.vel.x;
-            double a1 = p22.y - p11.y;
-            double b1 = p22.x - p11.x;
-            double c1 = a1*p11.x + b1*p11.y;
-            double a2 = game.ball.vel.y;
-            double b2 = game.ball.vel.x;
-            double c2 = a2*game.ball.pos.x + b2*game.ball.pos.y;
-            double det = a1*b2 - a2*b1;
-            double ecks = -11111111;
-            double why = -111111;
-            if(det == 0){
-                ecks = -111111;
-                why = -1111111;
-            }else{
-                ecks = (b2*c1 - b1*c2)/det;
-                why = (a1*c2 - a2*c1)/det;
-            }
-            if(delay > 20){
-            if(((ecks >= p11.x && ecks <= p22.x )||(ecks <= p11.x && ecks >= p22.x)) && ((ecks >= game.ball.pos.x && ecks <= game.ball.pos.x + game.ball.vel.x) || (ecks <= game.ball.pos.x && ecks >= game.ball.pos.x + game.ball.vel.x) )){
-                Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
-                System.out.println("itworked?");
-                try{game.ball.collide(game.paddle1);} catch(Exception e1){}
-                if(nexthitter == 2){
-                    pointscored = true;
-                    game.player2score++;
-                }else{
-                    if(lefthit == 0){
-                        pointscored = true;
-                        game.player2score++;
-                    }
-                }
-                nexthitter = 2;
-                lefthit = 0;
-                righthit = 0;
-            }
-                delay = 0;
-<<<<<<< HEAD
-=======
-				if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 55){
-					// System.out.println("It's close enough!");
-					int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle1.ang)+.5);
-					int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle1.ang)+.5);
-					Point p11 = new Point((int)game.paddle1.pos.x + xx, (int)game.paddle1.pos.y + yy);
-					Point p22 = new Point((int)game.paddle1.pos.x - xx, (int)game.paddle1.pos.y - yy);
-					Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
-					if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
-						try{game.ball.collide(game.paddle1);} catch(Exception e1){}
-						if(nexthitter == 2){
-							pointscored = true;
-							game.player2score++;
-						}else{
-							if(lefthit == 0){
-								pointscored = true;
-								game.player2score++;
-							}
-						}
-						nexthitter = 2;
-						lefthit = 0;
-						righthit = 0;
-					}
-				}
-				//Ball x Paddle2
-				if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle2.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle2.pos.y,2)) <= 55){
-					// System.out.println("It's close enough!");
-					int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle2.ang)+.5);
-					int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle2.ang)+.5);
-					Point p11 = new Point((int)game.paddle2.pos.x + xx, (int)game.paddle2.pos.y + yy);
-					Point p22 = new Point((int)game.paddle2.pos.x - xx, (int)game.paddle2.pos.y - yy);
-					Point d = game.closestpointonline(p11.x,p11.y,p22.x,p22.y,(float)game.ball.pos.x,(float)game.ball.pos.y);
-					if(Math.sqrt(Math.pow(game.ball.pos.x - d.x,2) + Math.pow(game.ball.pos.y - d.y,2)) <= 5){
-						System.out.println("Try to col with 2");
-						try{game.ball.collide(game.paddle2);} catch(Exception e1){}
-						if(nexthitter == 1){
-							pointscored = true;
-							game.player1score++;
-						}else{
-							if(righthit == 0){
-								pointscored = true;
-								game.player1score++;
-							}
-						}
-						nexthitter = 1;
-						lefthit = 0;
-						righthit = 0;
-					}
-				}
->>>>>>> origin/master
-            }
-      
-        
+            
+            
+            
+            
+            
             //Ball x Net
             if(game.ball.pos.x <= game.getSize().width/2 && game.ball.pos.y >= game.getSize().height/2){
                 if(game.ball.pos.x + game.ball.vel.x >= game.getSize().width/2){
