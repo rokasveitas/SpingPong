@@ -242,19 +242,16 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         if(c == 'g'){
             paddle1.alp = -.01;
         }
-<<<<<<< HEAD
         if(c == 'h')
         {
             paddle1.omg = 0;
             paddle1.alp = 0;
         }
-=======
 		if(c == 'j')
 		{
 			paddle1.alp = 0;
 			paddle1.omg = 0;
 		}
->>>>>>> origin/master
         // Spin, but vel instead of alp
         if(c == 'o')
         {
@@ -310,19 +307,16 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         if(c == '2'){
             paddle2.alp = -.01;
         }
-<<<<<<< HEAD
         if(c == '3')
         {
             paddle2.omg = 0;
             paddle2.alp = 0;
         }
-=======
 		if(c == '/')
 		{
 			paddle2.alp = 0;
 			paddle2.omg = 0;
 		}
->>>>>>> origin/master
         repaint();
         e.consume();
     }
@@ -641,7 +635,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             //Ball x Paddle1
             if(game.serve /*&& delay > 0*/){
                 delay = 0;
-				iif(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 55){
+				if(Math.sqrt(Math.pow(game.ball.pos.x - game.paddle1.pos.x,2) + Math.pow(game.ball.pos.y - game.paddle1.pos.y,2)) <= 55){
 					// System.out.println("It's close enough!");
 					int xx = (int)(50*Math.cos(Math.PI*2 - game.paddle1.ang)+.5);
 					int yy = (int)(50*Math.sin(Math.PI*2 - game.paddle1.ang)+.5);
