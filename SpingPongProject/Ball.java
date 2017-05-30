@@ -5,8 +5,8 @@ public class Ball extends SpingThing
     public static final double SPIN_K = 1;      //constant for how much spin affects vel on bounce
     public static final double SPIN_DEC = .8;   //decay factor for spin on bounce
     public static final double MAG_K = 1;       //Magnus effect constant
-    public static final double G_ACC = .06;       //acceleration of gravity
-    public static final double COEF_PAD = 1.25;  //coefficient of elasticity of paddle/ball collision
+    public static final double G_ACC = .25;       //acceleration of gravity
+    public static final double COEF_PAD = .7;  //coefficient of elasticity of paddle/ball collision
     public double spin; //positive is clockwise
     
     public Ball(double rad, Vector pos, Vector vel)
@@ -16,10 +16,15 @@ public class Ball extends SpingThing
         this.vel = vel;
         this.acc = new Vector(0, 0);
     }
+	
+	public String toString()
+	{
+		return "spin: " + spin;
+	}
     
     public void timeInc(double dt)
     {
-        double magMag = MAG_K * Math.pow(size, 3) * spin * vel.getR(); //Magnus force magnitude
+        double magMag = MAG_K * spin * Math.abs(vel.getR()); //Magnus force magnitude
         Vector magF = Vector.unit(vel.getTheta() - Math.PI/2);
         magF.scale(magMag);
         //acc = Vector.add(magF, new Vector(0, -1*G_ACC));
@@ -32,7 +37,7 @@ public class Ball extends SpingThing
         switch(col.type)
         {
             case "table":
-                System.out.println("Col with table");
+                //System.out.println("Col with table");
                 this.vel.setY(-1 * this.vel.getY());
                 this.vel.setX(this.vel.getX() + SPIN_K * this.spin);
                 spin *= SPIN_DEC;
@@ -42,9 +47,9 @@ public class Ball extends SpingThing
                 this.vel.setX(0);
                 break;
             case "paddle":
-                System.out.println("Collision!");
+                //System.out.println("Collision!");
                 Paddle p = (Paddle) col;
-                System.out.println("Vel: " + this.vel);
+                //System.out.println("Vel: " + this.vel);
                 Vector par = p.getUnV().scaleR(Vector.dot(p.getUnV(), this.vel));
                 
                 /*System.out.println("Par: " + par);
@@ -56,6 +61,8 @@ public class Ball extends SpingThing
                 
                 //System.out.println("par is " + par + "\nperp is " + perp);
                 //System.out.println("vel is " + this.vel);
+				spin -= Vector.dot(this.vel, p.getUnV());
+				spin *= .6;
                 par.scale(-1);
                 Vector temp = Vector.add(par, perp);
                 temp.setY(-1 * temp.getY());
