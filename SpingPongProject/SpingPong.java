@@ -7,7 +7,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
     public static final double WALL_BOUNCE = .5; //coef of elast of paddle/wall collision
     public static final double NET_BOUNCE = .35;
     int width, height, gameSpeed, player1score, player2score;
-    boolean running = true, startscreen = true, rules = false, serve = false, abovep1 = false, abovep2 = false, swathp1 = false, swathp2 = false;
+    boolean running = true, startscreen = true, rules = false, serve = false, abovep1 = true, abovep2 = false, prevAbovep1 = false, prevAbovep2 = false, swathp1 = false, swathp2 = false;
     Dimension offDimension;
     Image offImage;
     Graphics offGraphics;
@@ -143,7 +143,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                g.drawImage(offImage, 0, 0, this);
             }
             g.drawImage(offImage, 0, 0, this);
-        }else{
+        }else{ //real game graphics
             startscreen = false;
             //Background
             offGraphics.setColor(Color.black);
@@ -183,7 +183,10 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
     public void mouseExited( MouseEvent e ) { }
     public void mousePressed( MouseEvent e ) { }
     public void mouseReleased( MouseEvent e ) { }
-    public void mouseClicked( MouseEvent e ) { }
+    public void mouseClicked( MouseEvent e )
+	{
+		System.out.println(e.getPoint());
+	}
     public void mouseDragged( MouseEvent e ) { }
     public void mouseEntered( MouseEvent e ) { }
     public void mouseMoved( MouseEvent e ) { }
@@ -298,16 +301,16 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         //Paddle2
         //  Movement
         if(keyCode == KeyEvent.VK_UP){
-            paddle2.acc.y = -1;
+            ball.acc.y = -1;
         }
         if(keyCode == KeyEvent.VK_DOWN){
-            paddle2.acc.y = 1;
+            ball.acc.y = 1;
         }
         if(keyCode == KeyEvent.VK_LEFT){
-            paddle2.acc.x = -1;
+            ball.acc.x = -1;
         }
         if(keyCode == KeyEvent.VK_RIGHT){
-            paddle2.acc.x = 1;
+            ball.acc.x = 1;
         }
         //  Spin
         if(c == '1'){
@@ -317,22 +320,11 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             paddle2.alp = -.01;
         }
 
-        if(c == '/')
-        {
-            paddle2.alp = 0;
-            paddle2.omg = 0;
-        }
-
         if(c == '3')
         {
             paddle2.omg = 0;
             paddle2.alp = 0;
         }
-		if(c == '/')
-		{
-			paddle2.alp = 0;
-			paddle2.omg = 0;
-		}
 
         repaint();
         e.consume();
@@ -380,23 +372,23 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         //Paddle2
         //  Movement
         if(keyCode == KeyEvent.VK_UP){
-            if(paddle2.acc.y < 0){
-                paddle2.acc.y = 0;
+            if(ball.acc.y < 0){
+                ball.acc.y = 0;
             }
         }
         if(keyCode == KeyEvent.VK_DOWN){
-            if(paddle2.acc.y > 0){
-                paddle2.acc.y = 0;
+            if(ball.acc.y > 0){
+                ball.acc.y = 0;
             }
         }
         if(keyCode == KeyEvent.VK_LEFT){
-            if(paddle2.acc.x < 0){
-                paddle2.acc.x = 0;
+            if(ball.acc.x < 0){
+                ball.acc.x = 0;
             }
         }
         if(keyCode == KeyEvent.VK_RIGHT){
-            if(paddle2.acc.x > 0){
-                paddle2.acc.x = 0;
+            if(ball.acc.x > 0){
+                ball.acc.x = 0;
             }
         }
         //  Spin
@@ -410,6 +402,18 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 paddle2.alp = 0;
             }
         }
+		
+		//ball movement
+		if(c == '4')
+			ball.vel = new Vector(-.1, 0);
+		if(c == '5')
+			ball.vel = new Vector(.1, 0);
+		if(c == '6')
+			ball.vel = new Vector(0, 0);
+		if(c == '8')
+			ball.vel = new Vector(0, -.1);
+		if(c == '9')
+			ball.vel = new Vector(0, .1);
     }
     class Friction extends Thread{
         public void run(){
@@ -417,8 +421,8 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 paddle1.vel.x *= .75;
                 paddle1.vel.y *= .75;
                 paddle1.omg *= .95;
-                paddle2.vel.x *= .75;
-                paddle2.vel.y *= .75;
+                ball.vel.x *= .75;
+                ball.vel.y *= .75;
                 paddle2.omg *= .95;
                 try{Thread.sleep(40);}catch(Exception k){}
             }
@@ -463,7 +467,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         game.paddle2.pos.x = game.getSize().width - 200;
         game.paddle2.pos.y = game.getSize().height/2;
         game.ball.pos.x = game.getSize().width/2;
-        game.ball.pos.y = game.getSize().height/2 - 400;
+        game.ball.pos.y = game.getSize().height/2 - 100;
         //Game rule variables
         boolean pointscored = true;
         String server = "one";
@@ -479,7 +483,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 game.paddle2.pos.x = game.getSize().width - 200;
                 game.paddle2.pos.y = game.getSize().height/2;
                 game.ball.pos.x = game.paddle1.pos.x;
-                game.ball.pos.y = game.getSize().height/2 - 400;
+                game.ball.pos.y = game.getSize().height/2 - 100;
                 game.ball.vel = new Vector(0, 0);
             }
             //Point Scored Reset
@@ -624,7 +628,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             if(game.ball.pos.y >= game.getSize().height/2 + 150 && (game.ball.pos.x <= game.getSize().width - 300 && game.ball.pos.x >= 300)){
                 if(game.ball.vel.y > 0){
                     System.out.println("Colliding with table");
-                    try{game.ball.collide(game.table);}catch(Exception k){}  //CHANGE LATER
+                    try{game.ball.collide(game.table);}catch(Exception k){ }
                     if(game.ball.pos.x <= game.getSize().width/2){
                         lefthit++;
                         if(lefthit > 1){
@@ -649,11 +653,26 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 }
             }
             // System.out.println("Should be checking ball hitting paddle...");
-            
-            
-            
-            
-            
+			
+			
+			game.prevAbovep1 = game.abovep1;
+			game.prevAbovep2 = game.abovep2;
+			game.abovep1 = (game.ball.pos.y) <= (Math.tan(game.paddle1.ang) * (game.paddle1.pos.x - game.ball.pos.x) + game.paddle1.pos.y);
+			game.abovep2 = (game.ball.pos.y) <= (Math.tan(game.paddle2.ang) * (game.paddle2.pos.x - game.ball.pos.x) + game.paddle2.pos.y);
+			
+			double p1dx = Math.abs(50 * Math.cos(game.paddle1.ang));
+			double p2dx = Math.abs(50 * Math.cos(game.paddle2.ang));
+			
+			game.swathp1 = game.paddle1.pos.x - p1dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle1.pos.x + p1dx;
+            game.swathp2 = game.paddle2.pos.x - p2dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle2.pos.x + p2dx;
+			
+			if((game.prevAbovep1 != game.abovep1) && game.swathp1)
+				try{game.ball.collide(game.paddle1);} catch(Exception v){};
+			
+			if((game.prevAbovep2 != game.abovep2) && game.swathp2)
+				try{game.ball.collide(game.paddle2);} catch(Exception v1){};
+
+			
             //Ball x Net
             if(game.ball.pos.x <= game.getSize().width/2 && game.ball.pos.y >= game.getSize().height/2){
                 if(game.ball.pos.x + game.ball.vel.x >= game.getSize().width/2){

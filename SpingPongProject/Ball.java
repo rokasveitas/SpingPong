@@ -19,19 +19,19 @@ public class Ball extends SpingThing
 	
 	public String toString()
 	{
-		return "spin: " + spin;
+		return "" + pos;
 	}
-    
+	
     public void timeInc(double dt)
     {
-        double magMag = MAG_K * spin * Math.abs(vel.getR()); //Magnus force magnitude
+	/*	double magMag = MAG_K * spin * Math.abs(vel.getR()); //Magnus force magnitude
         Vector magF = Vector.unit(vel.getTheta() - Math.PI/2);
         magF.scale(magMag);
-        //acc = Vector.add(magF, new Vector(0, -1*G_ACC));
+      */  //acc = Vector.add(magF, new Vector(0, -1*G_ACC));
         acc = new Vector(0, G_ACC);
         super.timeInc(dt);
     }
-    
+	 
     public void collide(SpingThing col) throws Exception
     {
         switch(col.type)
