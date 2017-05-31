@@ -4,6 +4,7 @@ public class Paddle extends SpingThing
     public double omg; //omega; angular velocity
     public double alp; //alpha; angular acceleration
     private Vector unitV; //unit vector in direction of paddle for dotting with collisions
+    public int which; //either 1 or 2 depending on which paddle it is
     
     
     public Paddle(double width, Vector pos, double ang)

@@ -25,7 +25,9 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         net = new SpingThing(150,"net");
         table = new SpingThing(200,"table");
         paddle1 = new Paddle(50,new Vector(100,getSize().height/2), 3*Math.PI/4);
+        paddle1.which = 1;
         paddle2 = new Paddle(50,new Vector(getSize().width - 100, getSize().height/2), Math.PI/4);
+        paddle2.which = 2;
         ball = new Ball(10, new Vector(getSize().width/2,getSize().height/2),new Vector(0,0));
         player1score = 0;
         player2score = 0;

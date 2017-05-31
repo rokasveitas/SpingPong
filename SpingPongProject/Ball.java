@@ -16,22 +16,22 @@ public class Ball extends SpingThing
         this.vel = vel;
         this.acc = new Vector(0, 0);
     }
-	
-	public String toString()
-	{
-		return "" + pos;
-	}
-	
+    
+    public String toString()
+    {
+        return "" + pos;
+    }
+    
     public void timeInc(double dt)
     {
-	/*	double magMag = MAG_K * spin * Math.abs(vel.getR()); //Magnus force magnitude
+    /*  double magMag = MAG_K * spin * Math.abs(vel.getR()); //Magnus force magnitude
         Vector magF = Vector.unit(vel.getTheta() - Math.PI/2);
         magF.scale(magMag);
       */  //acc = Vector.add(magF, new Vector(0, -1*G_ACC));
         acc = new Vector(0, G_ACC);
         super.timeInc(dt);
     }
-	 
+     
     public void collide(SpingThing col) throws Exception
     {
         switch(col.type)
@@ -61,8 +61,11 @@ public class Ball extends SpingThing
                 
                 //System.out.println("par is " + par + "\nperp is " + perp);
                 //System.out.println("vel is " + this.vel);
-				spin -= Vector.dot(this.vel, p.getUnV());
-				spin *= .6;
+                if(p.which == 1)
+                    spin += Vector.dot(this.vel, p.getUnV());
+                else
+                    spin -= Vector.dot(this.vel, p.getUnV());
+                spin *= .6;
                 par.scale(-1);
                 Vector temp = Vector.add(par, perp);
                 temp.setY(-1 * temp.getY());
