@@ -7,7 +7,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
     public static final double WALL_BOUNCE = .5; //coef of elast of paddle/wall collision
     public static final double NET_BOUNCE = .35;
     int width, height, gameSpeed, player1score, player2score;
-    boolean running = true, startscreen = true, rules = false, serve = false, abovep1 = true, abovep2 = false, prevAbovep1 = false, prevAbovep2 = false, swathp1 = false, swathp2 = false;
+    boolean running = true, startscreen = true, rules = false, serve = false, abovep1 = true, abovep2 = false, prevAbovep1 = false, prevAbovep2 = false, swathp1 = false, swathp2 = false, gameover = false;
     Dimension offDimension;
     Image offImage;
     Graphics offGraphics;
@@ -140,6 +140,47 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                offGraphics.setFont(f);
                offGraphics.setColor(Color.blue);
                offGraphics.drawString("Arrow keys, 1 and 2 (Rotate left/right)" , 700 , 795);
+               g.drawImage(offImage, 0, 0, this);
+            }
+            if(gameover){
+                               //Background color
+               offGraphics.setColor(Color.black);
+               offGraphics.fillRect(0,0, getSize().width, getSize().height);
+               
+               //Player 1 wins
+               offGraphics.setFont(h);
+               offGraphics.setColor(Color.red);
+               String winner = "";
+               if(player1score > player2score){
+                   winner = "Player 1 ";
+               }else{
+                   winner = "Player 2 ";
+               }
+                
+               offGraphics.drawString(winner +"Wins!!! " + "\n\n\n" , 620 , 400);  
+               
+               //Back to home screen
+               offGraphics.setColor(Color.yellow);
+               offGraphics.fillRect(800, 600, 320, 50);
+               
+               Font i = new Font("Impact", Font.ITALIC, 25);
+               offGraphics.setFont(i);
+               offGraphics.setColor(Color.blue);
+               offGraphics.drawString("Press 'p' to return to menu..." + "\n\n\n" , 813, 632);  
+               
+               //Smiley Face!
+               offGraphics.setColor(Color.black);
+               offGraphics.drawOval(920, 450, 80, 80);
+               offGraphics.drawOval(940, 475, 10, 10);
+               offGraphics.drawOval(975, 475, 10, 10);
+               offGraphics.drawArc(943, 415, 1, 20, 0 , -180);
+               offGraphics.setColor(Color.yellow);
+               offGraphics.fillOval(920, 450, 80, 80);
+               offGraphics.setColor(Color.black);
+               offGraphics.fillOval(940, 475, 5, 5);
+               offGraphics.fillOval(975, 475, 5, 5);
+               offGraphics.fillArc(943, 495, 35, 20, 0, -180);
+               
                g.drawImage(offImage, 0, 0, this);
             }
             g.drawImage(offImage, 0, 0, this);
@@ -280,6 +321,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         }
         if(c == 'p')
         {
+            gameover = false;
             System.out.println(ball);
         }
         if(c == 'q')
@@ -691,6 +733,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                     game.player1score = 0;
                     game.player2score = 0;
                     game.startscreen = true;
+                    game.gameover = true;
                 }
             }
             //    System.out.println("Moving things.");
