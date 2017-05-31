@@ -535,11 +535,13 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 if(server.equals("one")){
                     game.ball.pos.x = game.paddle1.pos.x;
                     lefthit = 1;
+                    righthit = 0;
                     nexthitter = 1;
                     servecount++;
                 }else if(server.equals("two")){
                     game.ball.pos.x = game.paddle2.pos.x;
                     righthit = 1;
+                    lefthit = 0;
                     nexthitter = 2;
                     servecount++;
                 }
@@ -706,13 +708,38 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
 			
 			game.swathp1 = game.paddle1.pos.x - p1dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle1.pos.x + p1dx;
             game.swathp2 = game.paddle2.pos.x - p2dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle2.pos.x + p2dx;
-			
-			if((game.prevAbovep1 != game.abovep1) && game.swathp1)
+			//ball x paddle1
+			if((game.prevAbovep1 != game.abovep1) && game.swathp1 && delay > 50){
 				try{game.ball.collide(game.paddle1);} catch(Exception v){};
-			
-			if((game.prevAbovep2 != game.abovep2) && game.swathp2)
+				if(nexthitter == 2){
+				    pointscored = true;
+				    game.player2score++;
+				}
+				if(nexthitter == 1){
+				    if(lefthit == 0){
+				        pointscored = true;
+				        game.player2score++;
+				    }
+				    nexthitter = 2;
+				}
+				delay = 0;
+            }
+            //ball x paddle2
+			if((game.prevAbovep2 != game.abovep2) && game.swathp2 && delay > 50){
 				try{game.ball.collide(game.paddle2);} catch(Exception v1){};
-
+				if(nexthitter == 1){
+				    pointscored = true;
+				    game.player1score++;
+				}
+				if(nexthitter == 2){
+				    if(righthit == 0){
+				        pointscored = true;
+				        game.player1score++;
+				    }
+				    nexthitter = 1;
+				}
+				delay = 0;
+            }
 			
             //Ball x Net
             if(game.ball.pos.x <= game.getSize().width/2 && game.ball.pos.y >= game.getSize().height/2){
