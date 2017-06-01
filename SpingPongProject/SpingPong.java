@@ -3,7 +3,7 @@ import java.awt.event.*;
 import java.applet.*;
 import javax.swing.*;
 public class SpingPong extends Applet implements KeyListener, MouseListener{
-    public static final double TBL_BOUNCE = .9; //coef of elasticity of ball/table collision
+    public static final double TBL_BOUNCE = .75; //coef of elasticity of ball/table collision
     public static final double WALL_BOUNCE = .5; //coef of elast of paddle/wall collision
     public static final double NET_BOUNCE = .35;
     int width, height, gameSpeed, player1score, player2score;
@@ -314,7 +314,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         //Debug
         if(c == 't')
             {
-            System.out.println(paddle1);
+            System.out.println(paddle2);
         }
         if(c == 'p')
         {

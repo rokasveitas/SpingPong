@@ -13,16 +13,19 @@ public class Paddle extends SpingThing
         this.pos = pos;
         this.ang = ang;
         this.unitV = Vector.unit(ang);
+        this.unitV.y *= -1;
         omg = 0;
         alp = 0;
     }
     
     public String toString()
     {
-        String out = super.toString();
+        /*String out = super.toString();
         out += "ang is " + ang + "\n";
         out += "omg is " + omg + "\n";
         out += "alp is " + alp + "\n";
+        */
+       String out = "" + unitV;
         return out;
     }
     
