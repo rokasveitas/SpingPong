@@ -6,7 +6,7 @@ public class Ball extends SpingThing
     public static final double SPIN_DEC = .8;   //decay factor for spin on bounce
     public static final double MAG_K = 3;       //Magnus effect constant
     public static final double G_ACC = .4;       //acceleration of gravity
-    public static final double COEF_PAD = .7;  //coefficient of elasticity of paddle/ball collision
+    public static final double COEF_PAD = .6;  //coefficient of elasticity of paddle/ball collision
     public double spin; //positive is clockwise
     
     public Ball(double rad, Vector pos, Vector vel)
@@ -19,7 +19,7 @@ public class Ball extends SpingThing
     
     public String toString()
     {
-        return "" + pos;
+        return "" + spin;
     }
     
     public void timeInc(double dt)
