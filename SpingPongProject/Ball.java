@@ -2,11 +2,11 @@ import java.lang.Math;
 
 public class Ball extends SpingThing
 {
-    public static final double SPIN_K = 1;      //constant for how much spin affects vel on bounce
+    public static final double SPIN_K = .7;//1      //constant for how much spin affects vel on bounce
     public static final double SPIN_DEC = .8;   //decay factor for spin on bounce
     public static final double MAG_K = 7;       //Magnus effect constant
     public static final double G_ACC = .4;       //acceleration of gravity
-    public static final double COEF_PAD = .6;  //coefficient of elasticity of paddle/ball collision
+    public static final double COEF_PAD = .4;//.6  //coefficient of elasticity of paddle/ball collision
     public double spin; //positive is clockwise
     
     public Ball(double rad, Vector pos, Vector vel)

@@ -10,8 +10,8 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
     public static final double TBL_BOUNCE = .75; //coef of elasticity of ball/table collision
     public static final double WALL_BOUNCE = .5; //coef of elast of paddle/wall collision
     public static final double NET_BOUNCE = .35;
+    boolean running = true, startscreen = true, rules = false, serve = false, abovep1 = true, abovep2 = false, prevAbovep1 = false, prevAbovep2 = false, swathp1 = false, swathp2 = false, gameover = false, cpu = false;
     int width, height, gameSpeed, player1score, player2score, whoWon;
-    boolean running = true, startscreen = true, rules = false, serve = false, abovep1 = true, abovep2 = false, prevAbovep1 = false, prevAbovep2 = false, swathp1 = false, swathp2 = false, gameover = false;
     Dimension offDimension;
     Image offImage;
     Graphics offGraphics;
@@ -38,11 +38,11 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         Friction fric = new Friction();
         fric.start();
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("C:\\Users\\veitasr8238\\Desktop\\SpingPong\\hiphopwii.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/Users/corneyr2573/Desktop/SpingPong/hiphopwii.wav").getAbsoluteFile());
             Clip c = AudioSystem.getClip();
             c.open(audioInputStream);
             FloatControl gainControl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-20.0f);
+            gainControl.setValue(0.0f);
             c.start();
         } catch(Exception ex) {
             //System.out.println("Error.");
@@ -186,7 +186,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                Font i = new Font("Impact", Font.ITALIC, 25);
                offGraphics.setFont(i);
                offGraphics.setColor(Color.blue);
-               offGraphics.drawString("Press 'p' to return to menu..." + "\n\n\n" , 813, 632);  
+               offGraphics.drawString("Press '1' to return to menu..." + "\n\n\n" , 813, 632);
                
                //Smiley Face!
                offGraphics.setColor(Color.black);
@@ -370,35 +370,13 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             paddle1.omg = -.05;
         }
         //Debug
-        /*
-        if(c == 't')
-            {
-            //System.out.println(paddle2);
-        }
-        if(c == 'p')
-        {
-            gameover = false;
-            //System.out.println(ball);
-        }
-        if(c == 'q')
-        {
-            try{ball.collide(paddle1);} catch(Exception e1){}
-        }
-        if(c == 'e')
-            {
-            try{ball.collide(paddle2);} catch(Exception e2){}
-        }
-        if(c == 'z')
-        {
+        if(c == 'p'){
             startscreen = true;
+            gameover = false;
         }
-        if(c == '7')
-        {
-            ball.vel = new Vector(0, 0);
-        }
-        */
         //Paddle2
         //  Movement
+        if(!cpu){
         if(keyCode == KeyEvent.VK_UP){
             paddle2.acc.y = -1;
         }
@@ -424,7 +402,13 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             paddle2.omg = 0;
             paddle2.alp = 0;
         }
-
+        }
+        if(c == '<'){
+            cpu = true;
+        }
+        if(c == '>'){
+            cpu = false;
+        }
         repaint();
         e.consume();
     }
@@ -510,8 +494,10 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 paddle1.vel.x *= .8;
                 paddle1.vel.y *= .8;
                 paddle1.omg *= .95;
-                paddle2.vel.x *= .8;
-                paddle2.vel.y *= .8;
+                if(!cpu){
+                    paddle2.vel.x *= .8;
+                    paddle2.vel.y *= .8;
+                }
                 paddle2.omg *= .95;
                 ball.vel.x *= .999;
                 ball.vel.y *= .999;
@@ -562,8 +548,24 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         //Game rule variables
         boolean pointscored = true;
         String server = "one";
-        int lefthit = 0,righthit = 0,p1hit = 0,p2hit = 0, nexthitter = 1, servecount = 0, delay = 21;
+        int lefthit = 0,righthit = 0,p1hit = 0,p2hit = 0, nexthitter = 1, servecount = 0, delay = 21, cpugo = (int)game.paddle2.pos.y, timer = 0;
         while(game.running){
+            if(timer > 11400){
+                try {
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/Users/corneyr2573/Desktop/SpingPong/hiphopwii.wav").getAbsoluteFile());
+                    Clip c = AudioSystem.getClip();
+                    c.open(audioInputStream);
+                    FloatControl gainControl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
+                    gainControl.setValue(0.0f);
+                    c.start();
+                } catch(Exception ex) {
+                    //System.out.println("Error.");
+                  
+                    ex.printStackTrace();
+                }
+                timer = 0;
+            }
+            timer++;
             //Game Loop
             // //System.out.println("In loop");
             // //System.out.println("Startscreen is " + game.startscreen);
@@ -734,7 +736,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             if(game.ball.pos.y >= game.getSize().height/2 + 150 && (game.ball.pos.x <= game.getSize().width - 300 && game.ball.pos.x >= 300)){
                 if(game.ball.vel.y > 0){
                     try {
-                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("C:\\Users\\veitasr8238\\Desktop\\SpingPong\\PONG.wav").getAbsoluteFile());
+                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/Users/corneyr2573/Desktop/SpingPong/PONG.wav").getAbsoluteFile());
                         Clip c = AudioSystem.getClip();
                         c.open(audioInputStream);
                         c.start();
@@ -785,9 +787,11 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             game.swathp1 = game.paddle1.pos.x - p1dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle1.pos.x + p1dx;
             game.swathp2 = game.paddle2.pos.x - p2dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle2.pos.x + p2dx;
             //ball x paddle1
+            if(game.serve){
             if((game.prevAbovep1 != game.abovep1) && game.swathp1 && delay > 50){
+                cpugo = (int)game.ball.pos.y;
                 try {
-                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("C:\\Users\\veitasr8238\\Desktop\\SpingPong\\PONG.wav").getAbsoluteFile());
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/Users/corneyr2573/Desktop/SpingPong/PONG.wav").getAbsoluteFile());
                     Clip c = AudioSystem.getClip();
                     c.open(audioInputStream);
                     c.start();
@@ -814,7 +818,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             //ball x paddle2
             if((game.prevAbovep2 != game.abovep2) && game.swathp2 && delay > 50){
                 try {
-                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("C:\\Users\\veitasr8238\\Desktop\\SpingPong\\PONG.wav").getAbsoluteFile());
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/Users/corneyr2573/Desktop/SpingPong/PONG.wav").getAbsoluteFile());
                     Clip c = AudioSystem.getClip();
                     c.open(audioInputStream);
                     c.start();
@@ -822,7 +826,16 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                     //System.out.println("Error.");
                     ex.printStackTrace();
                 }
-                try{game.ball.collide(game.paddle2);} catch(Exception v1){};
+                if(game.cpu){
+                    game.ball.vel.x = -20;
+                    if(game.ball.pos.y > game.getSize().height/2 - 100){
+                        game.ball.vel.y = -10;
+                    }else{
+                        game.ball.vel.y = -5;
+                    }
+                }else{
+                    try{game.ball.collide(game.paddle2);} catch(Exception v1){};
+                }
                 if(nexthitter == 1){
                     pointscored = true;
                     game.player1score++;
@@ -838,7 +851,25 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 righthit = 0;
                 delay = 0;
             }
-            
+            }
+            if(game.cpu){
+                server = "one";
+                servecount = 0;
+                if(game.serve){
+                    /*
+                    if(game.paddle2.pos.y < game.ball.pos.y){
+                        game.paddle2.vel.y = 5;
+                    }
+                    else if(game.paddle2.pos.y > game.ball.pos.y){
+                        game.paddle2.vel.y = -5;
+                    }else{
+                        game.paddle2.acc.y = 0;
+                    }*/
+                    game.paddle2.pos.y = game.ball.pos.y;
+                }
+                game.paddle2.pos.x = game.getSize().width - 200;
+                game.paddle2.ang = 2*Math.PI/3;
+            }
             //Ball x Net
             if(game.ball.pos.x <= game.getSize().width/2 && game.ball.pos.y >= game.getSize().height/2){
                 if(game.ball.pos.x + game.ball.vel.x >= game.getSize().width/2){
@@ -864,7 +895,13 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             }
             //    //System.out.println("Moving things.");
             game.paddle1.timeInc(1);
-            game.paddle2.timeInc(1);
+            if(!game.cpu){
+                game.paddle2.timeInc(1);
+            }else{
+                game.paddle2.acc = new Vector(0,0);
+                game.paddle2.vel.y = -10;
+                game.paddle2.vel.x = -40;
+            }
             if(game.serve){
                 game.ball.timeInc(1);
                 //  //System.out.println("Served");
