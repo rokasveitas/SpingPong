@@ -513,7 +513,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 paddle2.vel.x *= .8;
                 paddle2.vel.y *= .8;
                 paddle2.omg *= .95;
-                //ball.vel.x *= .999;
+                ball.vel.x *= .999;
                 ball.vel.y *= .999;
                 try{Thread.sleep(40);}catch(Exception k){}
             }
