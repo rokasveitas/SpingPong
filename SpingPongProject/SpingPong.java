@@ -548,8 +548,24 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         //Game rule variables
         boolean pointscored = true;
         String server = "one";
-        int lefthit = 0,righthit = 0,p1hit = 0,p2hit = 0, nexthitter = 1, servecount = 0, delay = 21, cpugo = (int)game.paddle2.pos.y;
+        int lefthit = 0,righthit = 0,p1hit = 0,p2hit = 0, nexthitter = 1, servecount = 0, delay = 21, cpugo = (int)game.paddle2.pos.y, timer = 0;
         while(game.running){
+            if(timer > 11400){
+                try {
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/Users/corneyr2573/Desktop/SpingPong/hiphopwii.wav").getAbsoluteFile());
+                    Clip c = AudioSystem.getClip();
+                    c.open(audioInputStream);
+                    FloatControl gainControl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
+                    gainControl.setValue(0.0f);
+                    c.start();
+                } catch(Exception ex) {
+                    //System.out.println("Error.");
+                  
+                    ex.printStackTrace();
+                }
+                timer = 0;
+            }
+            timer++;
             //Game Loop
             // //System.out.println("In loop");
             // //System.out.println("Startscreen is " + game.startscreen);
