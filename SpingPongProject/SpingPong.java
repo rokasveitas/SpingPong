@@ -403,10 +403,10 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             paddle2.alp = 0;
         }
         }
-        if(c == '<'){
+        if(c == ','){
             cpu = true;
         }
-        if(c == '>'){
+        if(c == '.'){
             cpu = false;
         }
         repaint();
