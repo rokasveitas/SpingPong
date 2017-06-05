@@ -38,7 +38,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         Friction fric = new Friction();
         fric.start();
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/Users/corneyr2573/Desktop/SpingPong/hiphopwii.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("hiphopwii.wav").getAbsoluteFile());
             Clip c = AudioSystem.getClip();
             c.open(audioInputStream);
             FloatControl gainControl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
@@ -552,7 +552,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         while(game.running){
             if(timer > 11400){
                 try {
-                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/Users/corneyr2573/Desktop/SpingPong/hiphopwii.wav").getAbsoluteFile());
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("hiphopwii.wav").getAbsoluteFile());
                     Clip c = AudioSystem.getClip();
                     c.open(audioInputStream);
                     FloatControl gainControl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
@@ -736,7 +736,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             if(game.ball.pos.y >= game.getSize().height/2 + 150 && (game.ball.pos.x <= game.getSize().width - 300 && game.ball.pos.x >= 300)){
                 if(game.ball.vel.y > 0){
                     try {
-                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/Users/corneyr2573/Desktop/SpingPong/PONG.wav").getAbsoluteFile());
+                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("PONG.wav").getAbsoluteFile());
                         Clip c = AudioSystem.getClip();
                         c.open(audioInputStream);
                         c.start();
@@ -791,7 +791,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             if((game.prevAbovep1 != game.abovep1) && game.swathp1 && delay > 50){
                 cpugo = (int)game.ball.pos.y;
                 try {
-                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/Users/corneyr2573/Desktop/SpingPong/PONG.wav").getAbsoluteFile());
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("PONG.wav").getAbsoluteFile());
                     Clip c = AudioSystem.getClip();
                     c.open(audioInputStream);
                     c.start();
@@ -818,7 +818,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             //ball x paddle2
             if((game.prevAbovep2 != game.abovep2) && game.swathp2 && delay > 50){
                 try {
-                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/Users/corneyr2573/Desktop/SpingPong/PONG.wav").getAbsoluteFile());
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("PONG.wav").getAbsoluteFile());
                     Clip c = AudioSystem.getClip();
                     c.open(audioInputStream);
                     c.start();
