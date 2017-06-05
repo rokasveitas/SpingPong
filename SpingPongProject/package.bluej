@@ -39,8 +39,8 @@ package.showUses=true
 project.charset=UTF-8
 target1.editor.height=1040
 target1.editor.width=960
-target1.editor.x=815
-target1.editor.y=207
+target1.editor.x=827
+target1.editor.y=2
 target1.height=50
 target1.name=Ball
 target1.naviview.expanded=true
@@ -65,10 +65,17 @@ target2.x=80
 target2.y=110
 target3.appletHeight=500
 target3.appletWidth=500
+<<<<<<< HEAD
 target3.editor.height=1056
 target3.editor.width=1936
 target3.editor.x=-8
 target3.editor.y=-8
+=======
+target3.editor.height=1040
+target3.editor.width=1918
+target3.editor.x=-68
+target3.editor.y=8
+>>>>>>> origin/master
 target3.height=50
 target3.name=SpingPong
 target3.naviview.expanded=false
@@ -78,7 +85,7 @@ target3.type=AppletTarget
 target3.typeParameters=
 target3.width=90
 target3.x=380
-target3.y=40
+target3.y=60
 target4.editor.height=675
 target4.editor.width=900
 target4.editor.x=150
