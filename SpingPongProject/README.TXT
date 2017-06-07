@@ -18,3 +18,5 @@ arrows: paddle2 trans
 12: paddle2 rot
 3: paddle2 stop rotation
 space/0: serve
+,: turn on bot
+.: turn off bot
