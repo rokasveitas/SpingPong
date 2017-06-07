@@ -786,6 +786,9 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             
             game.swathp1 = game.paddle1.pos.x - p1dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle1.pos.x + p1dx;
             game.swathp2 = game.paddle2.pos.x - p2dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle2.pos.x + p2dx;
+            
+
+            
             //ball x paddle1
             if(game.serve){
             if((game.prevAbovep1 != game.abovep1) && game.swathp1 && delay > 50){
@@ -828,6 +831,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 }
                 if(game.cpu){
                     game.ball.vel.x = -20;
+                    game.ball.spin *= .7;
                     if(game.ball.pos.y > game.getSize().height/2 - 100){
                         game.ball.vel.y = -10;
                     }else{
@@ -903,7 +907,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 game.paddle2.vel.x = -40;
             }
             if(game.serve){
-                game.ball.timeInc(1);
+                game.ball.timeInc(.5);
                 //  //System.out.println("Served");
             }
             delay++;
