@@ -1,13 +1,9 @@
-Key Actions
+Welcome to SpingPong!  To play, run the main method of the SpingPong class.  Click on the applet screen before you start.  Have fun!
 
-Debug
-b: quit all
-t: print paddle1
-p: print ball
-q: collide with paddle 1
-e: collide with paddle 2
-z: back to startscren
-7: ball vel = (0, 0)
+Many of the parameters are tunable at the top of the Ball and the SpingPong class.  They're all final constants and clearly labeled.
+
+
+Key Actions
 
 Title Screen
 1: single player
@@ -17,6 +13,8 @@ m: un-rules
 In-Game
 wasd: paddle1 trans
 fg: paddle1 rot
+h: paddle1 stop rotation
 arrows: paddle2 trans
 12: paddle2 rot
-
+3: paddle2 stop rotation
+space/0: serve
