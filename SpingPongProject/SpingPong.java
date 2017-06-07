@@ -806,6 +806,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             game.swathp1 = game.paddle1.pos.x - p1dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle1.pos.x + p1dx;
             game.swathp2 = game.paddle2.pos.x - p2dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle2.pos.x + p2dx;
             
+<<<<<<< HEAD
             //y swaths
             game.xprevAbovep1 = game.xabovep1;
             game.xprevAbovep2 = game.xabovep2;
@@ -841,6 +842,30 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                     }
                     try{game.ball.collide(game.paddle1);} catch(Exception v){};
                     if(nexthitter == 2){
+=======
+
+            
+            //ball x paddle1
+            if(game.serve){
+            if((game.prevAbovep1 != game.abovep1) && game.swathp1 && delay > 50){
+                cpugo = (int)game.ball.pos.y;
+                try {
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("PONG.wav").getAbsoluteFile());
+                    Clip c = AudioSystem.getClip();
+                    c.open(audioInputStream);
+                    c.start();
+                } catch(Exception ex) {
+                    //System.out.println("Error.");
+                    ex.printStackTrace();
+                }
+                try{game.ball.collide(game.paddle1);} catch(Exception v){};
+                if(nexthitter == 2){
+                    pointscored = true;
+                    game.player2score++;
+                }
+                if(nexthitter == 1){
+                    if(lefthit == 0){
+>>>>>>> b6538cf2f20373d091caad4c6ec60676e365ba26
                         pointscored = true;
                         game.player2score++;
                     }
@@ -855,6 +880,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                     righthit = 0;
                     delay = 0;
                 }
+<<<<<<< HEAD
                 //ball x paddle2
                 if(((game.p2usey && (game.swathp2 && (game.prevAbovep2 != game.abovep2))) || (!game.p2usey && (game.xswathp2 && (game.xprevAbovep2 != game.xabovep2)))) && delay > 50){
                     try {
@@ -873,6 +899,13 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                         }else{
                             game.ball.vel.y = -5;
                         }
+=======
+                if(game.cpu){
+                    game.ball.vel.x = -20;
+                    game.ball.spin *= .7;
+                    if(game.ball.pos.y > game.getSize().height/2 - 100){
+                        game.ball.vel.y = -10;
+>>>>>>> b6538cf2f20373d091caad4c6ec60676e365ba26
                     }else{
                         try{game.ball.collide(game.paddle2);} catch(Exception v1){};
                     }
@@ -943,7 +976,11 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 game.paddle2.vel.x = -40;
             }
             if(game.serve){
+<<<<<<< HEAD
                 game.ball.timeInc(.7);
+=======
+                game.ball.timeInc(.5);
+>>>>>>> b6538cf2f20373d091caad4c6ec60676e365ba26
                 //  //System.out.println("Served");
             }
             delay++;
