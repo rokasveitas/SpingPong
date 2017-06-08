@@ -299,9 +299,6 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
         }
         Make sure to stop the action in keyReleased!
         */
-        if(c == '6'){
-            Sound meme = new Sound();
-        }
         if(c == 'b'){
             running = false;
             stop();
