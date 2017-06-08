@@ -10,8 +10,9 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
     public static final double TBL_BOUNCE = .75; //coef of elasticity of ball/table collision
     public static final double WALL_BOUNCE = .5; //coef of elast of paddle/wall collision
     public static final double NET_BOUNCE = .35;
-    boolean running = true, startscreen = true, rules = false, serve = false, abovep1 = true, abovep2 = false, prevAbovep1 = false, prevAbovep2 = false, swathp1 = false, swathp2 = false, gameover = false, cpu = false;
+    boolean running = true, startscreen = true, rules = false, serve = false, abovep1 = true, abovep2 = false, prevAbovep1 = false, prevAbovep2 = false, swathp1 = false, swathp2 = false, xabovep1 = true, xabovep2 = true, xprevAbovep1 = true, xprevAbovep2 = true, xswathp1 = true, xswathp2 = false, gameover = false, cpu = false;
     int width, height, gameSpeed, player1score, player2score, whoWon;
+    boolean p1usey = true, p2usey = true;
     Dimension offDimension;
     Image offImage;
     Graphics offGraphics;
@@ -619,7 +620,23 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 
                 game.swathp1 = game.paddle1.pos.x - p1dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle1.pos.x + p1dx;
                 game.swathp2 = game.paddle2.pos.x - p2dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle2.pos.x + p2dx;
-                    
+                
+                
+                
+                game.xabovep1 = (game.ball.pos.x) <= (Math.tan(game.paddle1.ang + Math.PI/2) * (game.paddle1.pos.y - game.ball.pos.y) + game.paddle1.pos.x);
+                game.xabovep2 = (game.ball.pos.x) <= (Math.tan(game.paddle2.ang + Math.PI/2) * (game.paddle2.pos.y - game.ball.pos.y) + game.paddle2.pos.x);
+                game.xprevAbovep1 = game.xabovep1;
+                game.xprevAbovep2 = game.xabovep2;
+                
+                double p1dy = Math.abs(50 * Math.sin(game.paddle1.ang));
+                double p2dy = Math.abs(50 * Math.sin(game.paddle2.ang));
+                
+                game.xswathp1 = game.paddle1.pos.y - p1dy <= game.ball.pos.y && game.ball.pos.y <= game.paddle1.pos.y + p1dy;
+                game.xswathp2 = game.paddle2.pos.y - p2dy <= game.ball.pos.y && game.ball.pos.y <= game.paddle2.pos.y + p2dy;
+                
+                game.p1usey = Math.abs(Math.tan(game.paddle1.ang)) <= 1;
+                game.p2usey = Math.abs(Math.tan(game.paddle2.ang)) <= 1;
+                
                 try{Thread.sleep(500);}catch(Exception e){}
                 pointscored = false;
             }
@@ -770,9 +787,11 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                     }
                 }
             }
-            // //System.out.println("Should be checking ball hitting paddle...");
+           
             
+            //checking paddle collisions...   
             
+            //x swaths
             game.prevAbovep1 = game.abovep1;
             game.prevAbovep2 = game.abovep2;
             game.abovep1 = (game.ball.pos.y) <= (Math.tan(game.paddle1.ang) * (game.paddle1.pos.x - game.ball.pos.x) + game.paddle1.pos.y);
@@ -784,6 +803,43 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             game.swathp1 = game.paddle1.pos.x - p1dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle1.pos.x + p1dx;
             game.swathp2 = game.paddle2.pos.x - p2dx <= game.ball.pos.x && game.ball.pos.x <= game.paddle2.pos.x + p2dx;
             
+<<<<<<< HEAD
+            //y swaths
+            game.xprevAbovep1 = game.xabovep1;
+            game.xprevAbovep2 = game.xabovep2;
+            game.xabovep1 = (game.ball.pos.x) <= (Math.tan(game.paddle1.ang + Math.PI/2) * (game.paddle1.pos.y - game.ball.pos.y) + game.paddle1.pos.x);
+            game.xabovep2 = (game.ball.pos.x) <= (Math.tan(game.paddle2.ang + Math.PI/2) * (game.paddle2.pos.y - game.ball.pos.y) + game.paddle2.pos.x);
+            
+            double p1dy = Math.abs(50 * Math.sin(game.paddle1.ang));
+            double p2dy = Math.abs(50 * Math.sin(game.paddle2.ang));
+            
+            game.xswathp1 = game.paddle1.pos.y - p1dy <= game.ball.pos.y && game.ball.pos.y <= game.paddle1.pos.y + p1dy;
+            game.xswathp2 = game.paddle2.pos.y - p2dy <= game.ball.pos.y && game.ball.pos.y <= game.paddle2.pos.y + p2dy;
+            
+            //use bools
+            game.p1usey = Math.abs(Math.tan(game.paddle1.ang)) <= 1;
+            game.p2usey = Math.abs(Math.tan(game.paddle2.ang)) <= 1;
+            
+            
+            
+            if(game.serve)
+            {
+                //ball x paddle1
+                if(((game.p1usey && (game.swathp1 && (game.prevAbovep1 != game.abovep1))) || (!game.p1usey && (game.xswathp1 && (game.xprevAbovep1 != game.xabovep1)))) && delay > 50)
+                {
+                    cpugo = (int)game.ball.pos.y;
+                    try {
+                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("PONG.wav").getAbsoluteFile());
+                        Clip c = AudioSystem.getClip();
+                        c.open(audioInputStream);
+                        c.start();
+                    } catch(Exception ex) {
+                        //System.out.println("Error.");
+                        ex.printStackTrace();
+                    }
+                    try{game.ball.collide(game.paddle1);} catch(Exception v){};
+                    if(nexthitter == 2){
+=======
 
             
             //ball x paddle1
@@ -806,52 +862,65 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 }
                 if(nexthitter == 1){
                     if(lefthit == 0){
+>>>>>>> b6538cf2f20373d091caad4c6ec60676e365ba26
                         pointscored = true;
                         game.player2score++;
                     }
-                    nexthitter = 2;
+                    if(nexthitter == 1){
+                        if(lefthit == 0){
+                            pointscored = true;
+                            game.player2score++;
+                        }
+                        nexthitter = 2;
+                    }
+                    lefthit = 0;
+                    righthit = 0;
+                    delay = 0;
                 }
-                lefthit = 0;
-                righthit = 0;
-                delay = 0;
-            }
-            //ball x paddle2
-            if((game.prevAbovep2 != game.abovep2) && game.swathp2 && delay > 50){
-                try {
-                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("PONG.wav").getAbsoluteFile());
-                    Clip c = AudioSystem.getClip();
-                    c.open(audioInputStream);
-                    c.start();
-                } catch(Exception ex) {
-                    //System.out.println("Error.");
-                    ex.printStackTrace();
-                }
+<<<<<<< HEAD
+                //ball x paddle2
+                if(((game.p2usey && (game.swathp2 && (game.prevAbovep2 != game.abovep2))) || (!game.p2usey && (game.xswathp2 && (game.xprevAbovep2 != game.xabovep2)))) && delay > 50){
+                    try {
+                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("PONG.wav").getAbsoluteFile());
+                        Clip c = AudioSystem.getClip();
+                        c.open(audioInputStream);
+                        c.start();
+                    } catch(Exception ex) {
+                        //System.out.println("Error.");
+                        ex.printStackTrace();
+                    }
+                    if(game.cpu){
+                        game.ball.vel.x = -20;
+                        if(game.ball.pos.y > game.getSize().height/2 - 100){
+                            game.ball.vel.y = -10;
+                        }else{
+                            game.ball.vel.y = -5;
+                        }
+=======
                 if(game.cpu){
                     game.ball.vel.x = -20;
                     game.ball.spin *= .7;
                     if(game.ball.pos.y > game.getSize().height/2 - 100){
                         game.ball.vel.y = -10;
+>>>>>>> b6538cf2f20373d091caad4c6ec60676e365ba26
                     }else{
-                        game.ball.vel.y = -5;
+                        try{game.ball.collide(game.paddle2);} catch(Exception v1){};
                     }
-                }else{
-                    try{game.ball.collide(game.paddle2);} catch(Exception v1){};
-                }
-                if(nexthitter == 1){
-                    pointscored = true;
-                    game.player1score++;
-                }
-                if(nexthitter == 2){
-                    if(righthit == 0){
+                    if(nexthitter == 1){
                         pointscored = true;
                         game.player1score++;
                     }
-                    nexthitter = 1;
+                    if(nexthitter == 2){
+                        if(righthit == 0){
+                            pointscored = true;
+                            game.player1score++;
+                        }
+                        nexthitter = 1;
+                    }
+                    lefthit = 0;
+                    righthit = 0;
+                    delay = 0;
                 }
-                lefthit = 0;
-                righthit = 0;
-                delay = 0;
-            }
             }
             if(game.cpu){
                 server = "one";
@@ -904,7 +973,11 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
                 game.paddle2.vel.x = -40;
             }
             if(game.serve){
+<<<<<<< HEAD
+                game.ball.timeInc(.7);
+=======
                 game.ball.timeInc(.5);
+>>>>>>> b6538cf2f20373d091caad4c6ec60676e365ba26
                 //  //System.out.println("Served");
             }
             delay++;
