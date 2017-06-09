@@ -825,7 +825,7 @@ public class SpingPong extends Applet implements KeyListener, MouseListener{
             
             //ball x paddle1
             if(game.serve){
-                if((game.prevAbovep1 != game.abovep1) && game.swathp1 && delay > 50){
+                if(((game.p1usey && (game.swathp1 && (game.prevAbovep1 != game.abovep1))) || (!game.p1usey && (game.xswathp1 && (game.xprevAbovep1 != game.xabovep1)))) && delay > 50){
                     cpugo = (int)game.ball.pos.y;
                     try {
                         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("PONG.wav").getAbsoluteFile());
